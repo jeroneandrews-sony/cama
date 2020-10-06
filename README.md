@@ -8,7 +8,7 @@ The model of camera that was used to capture a particular photographic image (mo
 Cama is able to successfully perform targeted transformations on in-distribution images (i.e. images captured by camera models known to it).
 
 ![inDist-example](images/flower.png)
-Example of Cama transformed images <img src="https://render.githubusercontent.com/render/math?math=x^\prime"> with different target label conditions <img src="https://render.githubusercontent.com/render/math?math=y^\prime"> given an in-distribution input image <img src="https://render.githubusercontent.com/render/math?math=x">. The applied transformations (amplified for visualization purposes) are shown as <img src="https://render.githubusercontent.com/render/math?math=\delta">
+Example of Cama transformed images <img src="https://render.githubusercontent.com/render/math?math=\large x^\prime"> with different target label conditions <img src="https://render.githubusercontent.com/render/math?math=\large y^\prime"> given an in-distribution input image <img src="https://render.githubusercontent.com/render/math?math=\large x">. The applied transformations (amplified for visualization purposes) are shown as <img src="https://render.githubusercontent.com/render/math?math=\large \delta">
 
 
 ## Anonymizing out-of-distribution images
