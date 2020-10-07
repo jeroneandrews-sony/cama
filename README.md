@@ -19,7 +19,7 @@ Example (below) of Cama transformed images <img src="https://render.githubuserco
 
 ![inDist-example](images/flower.png)
 
-<img src="https://github.com/jeroneandrews/cama/images/flower.png" width="300" />
+<img src="images/flower.png" width="300" />
 
 ## Anonymizing out-of-distribution images
 Cama is also able to successfully perform targeted transformations on out-of-distribution images (i.e. images captured by camera models unknown to it).
