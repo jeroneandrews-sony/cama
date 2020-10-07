@@ -2,11 +2,15 @@
 
 PyTorch implementation of [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798) (ECCV 2020 Advances in Image Manipulation Workshop).
 
-Digital photographs can be blindly attributed to the specific camera model used for capture.
+Digital photographs can be **blindly** attributed to the specific camera model used for capture.
 
 ![blind-att](images/blind-att.png)
 
-Conditional Adversarial Camera Model Anonymization (Cama) offers a way to preserve privacy by transforming these artifacts such that the apparent capture model is changed (targeted transformation). Significantly, the applied transformations do not alter an image's content and are (largely) imperceptible.
+Conditional Adversarial Camera Model Anonymization (Cama) offers a way to preserve privacy by transforming these artifacts such that the apparent capture model is changed (targeted transformation).
+
+![blind-att](images/cam-anon.png)
+
+Significantly, the applied transformations do not alter an image's content and are (largely) imperceptible.
 
 ## Anonymizing in-distribution images
 Cama is able to successfully perform targeted transformations on in-distribution images (i.e. images captured by camera models known to it).
