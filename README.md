@@ -6,7 +6,7 @@ Digital photographs can be **blindly** attributed to the specific camera model u
 
 ![blind-att](images/blind-att.png)
 
-Conditional Adversarial Camera Model Anonymization (Cama) offers a way to preserve privacy by transforming these artifacts such that the apparent capture model is changed (targeted transformation). While at the same time retaining the image content. Given an image and a target label condition, the applied transformation causes a non-interactive black-box *target* (i.e. to be attacked/fooled) convnet classifier F to predict the target label given the transformed image. 
+Conditional Adversarial Camera Model Anonymization (Cama) offers a way to preserve privacy by transforming these artifacts such that the apparent capture model is changed (targeted transformation). That is, given an image and a target label condition, the applied transformation causes a non-interactive black-box *target* (i.e. to be attacked/fooled) convnet classifier F to predict the target label given the transformed image. While at the same time retaining the original image content.
 
 However, Cama is trained in a **non-interactive black-box setting**: Cama does not have knowledge of the parameters, architecture or training randomness of F, nor can Cama interact with it. 
 
