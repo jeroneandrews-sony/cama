@@ -2,7 +2,11 @@
 
 PyTorch implementation of [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798) (ECCV 2020 Advances in Image Manipulation Workshop).
 
-The model of camera that was used to capture a particular photographic image (model attribution) is typically inferred from high-frequency model-specific artifacts present within the viewable image (i.e. a .jpeg or .tiff image). Conditional Adversarial Camera Model Anonymization (Cama) offers a way to preserve privacy by transforming these artifacts such that the apparent capture model is changed (targeted transformation). Significantly, the applied transformations do not alter an image's content and are (largely) imperceptible.
+Digital photographs can be blindly attributed to the specific camera model used for capture.
+
+![blind-att](images/blind-att.png)
+
+Conditional Adversarial Camera Model Anonymization (Cama) offers a way to preserve privacy by transforming these artifacts such that the apparent capture model is changed (targeted transformation). Significantly, the applied transformations do not alter an image's content and are (largely) imperceptible.
 
 ## Anonymizing in-distribution images
 Cama is able to successfully perform targeted transformations on in-distribution images (i.e. images captured by camera models known to it).
@@ -22,3 +26,5 @@ Example (below) of Cama transformed images <img src="https://render.githubuserco
 
 ## Model
 ![cama-model](images/model.png)
+
+Cama has two class conditional components: a generator G that transforms an image x conditioned on a target class label y′, and a discriminator D that predicts whether the low-level high-frequency pixel value dependency features of any given image conditioned on a label are real or fake. In addition, Cama has a fixed (w.r.t. its parameters) dual-stream discriminative decision-making component E (evaluator) that decides whether a transformed image x belongs to its target class y . In essence, E serves as a surrogate for the non-interactive black-box F. W.r.t. E, a transformed image x′ is decomposed into its high and low spatial frequency components (x′H and x′L, respectively), via E0, with each assigned to a separate stream (EH and EL, respectively). The evaluator then reasons over the information present in x′H and x′L separately (via EH and EL, respectively). This reinforces the transformation process, as G is constrained
