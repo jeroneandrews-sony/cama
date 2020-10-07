@@ -17,7 +17,8 @@ Cama is able to successfully perform targeted transformations on in-distribution
 
 Example (below) of Cama transformed images <img src="https://render.githubusercontent.com/render/math?math=\large x^'"> with different target label conditions <img src="https://render.githubusercontent.com/render/math?math=\large y^'"> given an in-distribution input image <img src="https://render.githubusercontent.com/render/math?math=\large x"> (whose ground truth label is <img src="https://render.githubusercontent.com/render/math?math=\large y">). The applied transformations (amplified for visualization purposes) are shown as <img src="https://render.githubusercontent.com/render/math?math=\large \delta">.
 
-![inDist-example](images/flower.png)
+<!-- ![inDist-example](images/flower.png) -->
+<img src="images/flower.png" width="700" />
 
 ## Anonymizing out-of-distribution images
 Cama is also able to successfully perform targeted transformations on out-of-distribution images (i.e. images captured by camera models unknown to it).
@@ -25,7 +26,6 @@ Cama is also able to successfully perform targeted transformations on out-of-dis
 Example (below) of Cama transformed images <img src="https://render.githubusercontent.com/render/math?math=\large x^'"> with different target label conditions <img src="https://render.githubusercontent.com/render/math?math=\large y^'"> given an out-of-distribution input image <img src="https://render.githubusercontent.com/render/math?math=\large x"> (whose ground truth label is <img src="https://render.githubusercontent.com/render/math?math=\large y">). The applied transformations (amplified for visualization purposes) are shown as <img src="https://render.githubusercontent.com/render/math?math=\large \delta">.
 
 ![outDist-example](images/building.png)
-<img src="images/flower.png" width="700" />
 
 ## Model
 We denote by <img src="https://render.githubusercontent.com/render/math?math=\large x\in\mathbb{R}^d"> and <img src="https://render.githubusercontent.com/render/math?math=\large y\in\mathbb{N}_c=\{1,\dots,c\}"> an image and its ground truth (source) camera model label, respectively, sampled from a dataset <img src="https://render.githubusercontent.com/render/math?math=\large p_{\text{data}}">. Consider a *target* (i.e. to be attacked) convnet classifier <img src="https://render.githubusercontent.com/render/math?math=\large F"> with <img src="https://render.githubusercontent.com/render/math?math=\large c"> classes trained over input-output tuples <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim p_{\mathrm{data}}(x,y)">. Given <img src="https://render.githubusercontent.com/render/math?math=\large x">, <img src="https://render.githubusercontent.com/render/math?math=\large F"> outputs a prediction vector of class probabilities <img src="https://render.githubusercontent.com/render/math?math=\large F:x\mapsto F(x)\in[0,1]^{c}">.
@@ -41,13 +41,15 @@ Cama has two class conditional components: a generator <img src="https://render.
 
 During conditional adversarial training, <img src="https://render.githubusercontent.com/render/math?math=\large G"> minimizes:
 
-![g-minimizes](images/g-minimizes.png)
+<!-- ![g-minimizes](images/g-minimizes.png) -->
+<img src="images/g-minimizes.png" width="700" />
 
 <!-- <img src="https://render.githubusercontent.com/render/math?math=\Large{\underbrace{(D(x^\prime,y)-1)^2}_{\text{Conditional adversarial loss}} %2B \underbrace{\lVert x-x^\prime \rVert_1}_{\text{Pixel-wise loss}} - \underbrace{\frac{1}{2}\log \left( E_\mathrm{H}(x^\prime_\mathrm{H})_{y^\prime}  E_\mathrm{L}(x^\prime_\mathrm{L})_{y^\prime} \right)}_{\text{Classification loss}}}"> -->
 
 whereas <img src="https://render.githubusercontent.com/render/math?math=\large D"> minimizes:
 
-![d-minimizes](images/d-minimizes.png)
+<!-- ![d-minimizes](images/d-minimizes.png) -->
+<img src="images/d-minimizes.png" width="700" />
 
 <!-- <img src="https://render.githubusercontent.com/render/math?math=\Large \smash{\underbrace{(D(x,y)-1)^2 %2B \frac{1}{2}\left[D(x^\prime, y^\prime)^2 %2B D(x,y^\prime)^2\right]}_{\text{Matching-aware conditional adversarial loss}}}"> -->
 
