@@ -41,5 +41,5 @@ Cama has two class conditional components: a generator <img src="https://render.
 During conditional adversarial training, <img src="https://render.githubusercontent.com/render/math?math=\large G"> minimizes:
 
 whereas <img src="https://render.githubusercontent.com/render/math?math=\large D"> minimizes:
-<img src="https://render.githubusercontent.com/render/math?math={\underbrace{(D(x,y)-1)^2 + \frac{1}{2}\left[D(x^\prime, y^\prime)^2 + D(x,y^\prime)^2\right]}_{\text{Matching-aware conditional adversarial loss}}}">
+<img src="https://render.githubusercontent.com/render/math?math={\underbrace{(D(x,y)-1)^2 %2B \frac{1}{2}\left[D(x^\prime, y^\prime)^2 %2B D(x,y^\prime)^2\right]}_{\text{Matching-aware conditional adversarial loss}}}">
 
