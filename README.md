@@ -19,14 +19,13 @@ Example (below) of Cama transformed images <img src="https://render.githubuserco
 
 ![inDist-example](images/flower.png)
 
-<img src="images/flower.png" width="300" />
-
 ## Anonymizing out-of-distribution images
 Cama is also able to successfully perform targeted transformations on out-of-distribution images (i.e. images captured by camera models unknown to it).
 
 Example (below) of Cama transformed images <img src="https://render.githubusercontent.com/render/math?math=\large x^'"> with different target label conditions <img src="https://render.githubusercontent.com/render/math?math=\large y^'"> given an out-of-distribution input image <img src="https://render.githubusercontent.com/render/math?math=\large x"> (whose ground truth label is <img src="https://render.githubusercontent.com/render/math?math=\large y">). The applied transformations (amplified for visualization purposes) are shown as <img src="https://render.githubusercontent.com/render/math?math=\large \delta">.
 
 ![outDist-example](images/building.png)
+<img src="images/flower.png" width="900" />
 
 ## Model
 We denote by <img src="https://render.githubusercontent.com/render/math?math=\large x\in\mathbb{R}^d"> and <img src="https://render.githubusercontent.com/render/math?math=\large y\in\mathbb{N}_c=\{1,\dots,c\}"> an image and its ground truth (source) camera model label, respectively, sampled from a dataset <img src="https://render.githubusercontent.com/render/math?math=\large p_{\text{data}}">. Consider a *target* (i.e. to be attacked) convnet classifier <img src="https://render.githubusercontent.com/render/math?math=\large F"> with <img src="https://render.githubusercontent.com/render/math?math=\large c"> classes trained over input-output tuples <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim p_{\mathrm{data}}(x,y)">. Given <img src="https://render.githubusercontent.com/render/math?math=\large x">, <img src="https://render.githubusercontent.com/render/math?math=\large F"> outputs a prediction vector of class probabilities <img src="https://render.githubusercontent.com/render/math?math=\large F:x\mapsto F(x)\in[0,1]^{c}">.
