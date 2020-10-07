@@ -12,6 +12,14 @@ However, Cama is trained in a **non-interactive black-box setting**: Cama does n
 
 ![blind-att](images/cam-anon.png)
 
+## Attack Setting and Desiderata
+We denote by <img src="https://render.githubusercontent.com/render/math?math=\large x\in\mathbb{R}^d"> and <img src="https://render.githubusercontent.com/render/math?math=\large y\in\mathbb{N}_c=\{1,\dots,c\}"> an image and its ground truth (source) camera model label, respectively, sampled from a dataset <img src="https://render.githubusercontent.com/render/math?math=\large p_{\text{data}}">. Consider a \emph{target} (i.e. to be attacked) convnet classifier <img src="https://render.githubusercontent.com/render/math?math=\large F"> with <img src="https://render.githubusercontent.com/render/math?math=\large c"> classes trained over input-output tuples <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim p_{\mathrm{data}}(x,y)">. Given <img src="https://render.githubusercontent.com/render/math?math=\large x">, <img src="https://render.githubusercontent.com/render/math?math=\large F"> outputs a prediction vector of class probabilities <img src="https://render.githubusercontent.com/render/math?math=\large $F:x\mapsto F(x)\in[0,1]^{c}$">.
+
+<!-- In this work, we operate in a \emph{non-interactive black-box setting}: we do not assume to have knowledge of the parameters, architecture or training randomness of $F$, nor can we interact with it. We do, however, assume that we can sample from a dataset similar to $p_{\mathrm{data}}$, which we denote by $q_{\mathrm{data}}$. Precisely, we can sample tuples of the following form: $(x,y)\sim q_{\text{data}}(x,y)$ s.t. $y\in\mathbb{N}_{c^\prime}$, where $c^\prime \leq c$. That is, the set of possible image class labels in $p_{\text{data}}$ is a superset of the set of possible image class labels in $q_{\text{data}}$, i.e. $\mathbb{N}_{c}\supseteq \mathbb{N}_{c^\prime}$.
+
+Suppose $(x,y)\sim q_{\text{data}}(x,y)$ and $y^\prime \in\mathbb{N}_{c^\prime}$, where $y^\prime \neq y$ is a target label. Our aim is to learn a function $G:(x,y^\prime)\mapsto x^\prime \approx x$ s.t. the maximum probability satisfies $\argmax_{i} F(x^\prime)_i=y^\prime$. This is known as a \emph{targeted} attack, whereas the maximum probability of an \emph{untargeted} attack must satisfy $\arg \max_{i} F(x^\prime)_i\neq y$. This work focuses on targeted attacks. -->
+
+
 <!-- Significantly, the applied transformations do not alter an image's content and are (largely) imperceptible.
 
 
