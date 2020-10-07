@@ -46,3 +46,5 @@ whereas <img src="https://render.githubusercontent.com/render/math?math=\large D
 
 <p align="center"><img src="images/d-minimizes.png" width="700" /></p>
 
+### Previous approaches to camera model anonymization
+<p align="center"><img src="images/previous-works.png" /></p>
