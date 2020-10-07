@@ -17,7 +17,9 @@ Cama is able to successfully perform targeted transformations on in-distribution
 
 Example (below) of Cama transformed images <img src="https://render.githubusercontent.com/render/math?math=\large x^'"> with different target label conditions <img src="https://render.githubusercontent.com/render/math?math=\large y^'"> given an in-distribution input image <img src="https://render.githubusercontent.com/render/math?math=\large x"> (whose ground truth label is <img src="https://render.githubusercontent.com/render/math?math=\large y">). The applied transformations (amplified for visualization purposes) are shown as <img src="https://render.githubusercontent.com/render/math?math=\large \delta">.
 
-![inDist-example](images/flower.png) <!-- .element width="50%" -->
+![inDist-example](images/flower.png)
+
+<img src="https://github.com/jeroneandrews/cama/images/flower.png" width="300" />
 
 ## Anonymizing out-of-distribution images
 Cama is also able to successfully perform targeted transformations on out-of-distribution images (i.e. images captured by camera models unknown to it).
