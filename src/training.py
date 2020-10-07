@@ -666,7 +666,7 @@ class GAN_Trainer(object):
                        ["generator"] + (["discriminator"]
                                         if self.dis is not None else []),
                        [self.gen] + ([self.dis]
-                                     if self.dis is not Noneelse[]),
+                                     if self.dis is not None else[]),
                        ["gen_optimizer"] + (["dis_optimizer"]
                                             if self.dis is not None else []),
                        [self.gen_optimizer] + ([self.dis_optimizer]

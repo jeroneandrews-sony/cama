@@ -168,7 +168,7 @@ elif params.reload:
 # move the model to DataParallel
 if len(params.gpu_devices) > 1:
     estimator = torch.nn.DataParallel(estimator,
-                                      [gpu_for gpu_ in range(len(
+                                      [gpu_ for gpu_ in range(len(
                                           params.gpu_devices
                                       ))])
 
