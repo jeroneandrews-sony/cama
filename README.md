@@ -40,9 +40,13 @@ Cama has two class conditional components: a generator <img src="https://render.
 
 During conditional adversarial training, <img src="https://render.githubusercontent.com/render/math?math=\large G"> minimizes:
 
-<img src="https://render.githubusercontent.com/render/math?math=\Large{\underbrace{(D(x^\prime,y)-1)^2}_{\text{Conditional adversarial loss}} %2B \underbrace{\lVert x-x^\prime \rVert_1}_{\text{Pixel-wise loss}} - \underbrace{\frac{1}{2}\log \left( E_\mathrm{H}(x^\prime_\mathrm{H})_{y^\prime}  E_\mathrm{L}(x^\prime_\mathrm{L})_{y^\prime} \right)}_{\text{Classification loss}}}">
+![g-minimizes](images/g-minimizes.png)
+
+<!-- <img src="https://render.githubusercontent.com/render/math?math=\Large{\underbrace{(D(x^\prime,y)-1)^2}_{\text{Conditional adversarial loss}} %2B \underbrace{\lVert x-x^\prime \rVert_1}_{\text{Pixel-wise loss}} - \underbrace{\frac{1}{2}\log \left( E_\mathrm{H}(x^\prime_\mathrm{H})_{y^\prime}  E_\mathrm{L}(x^\prime_\mathrm{L})_{y^\prime} \right)}_{\text{Classification loss}}}"> -->
 
 whereas <img src="https://render.githubusercontent.com/render/math?math=\large D"> minimizes:
 
-<img src="https://render.githubusercontent.com/render/math?math=\Large \smash{\underbrace{(D(x,y)-1)^2 %2B \frac{1}{2}\left[D(x^\prime, y^\prime)^2 %2B D(x,y^\prime)^2\right]}_{\text{Matching-aware conditional adversarial loss}}}">
+![d-minimizes](images/d-minimizes.png)
+
+<!-- <img src="https://render.githubusercontent.com/render/math?math=\Large \smash{\underbrace{(D(x,y)-1)^2 %2B \frac{1}{2}\left[D(x^\prime, y^\prime)^2 %2B D(x,y^\prime)^2\right]}_{\text{Matching-aware conditional adversarial loss}}}"> -->
 
