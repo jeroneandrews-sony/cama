@@ -25,14 +25,15 @@ parser.add_argument("--test_batch_size", type=int, default=16,
 parser.add_argument("--in_dist", type=bool_flag, default=True,
                     help="Are the test images in-distribution, i.e. captured "
                     "by camera models known to conditional GAN?")
-parser.add_argument("--comp_distortion", type=bool_flag, default=False,
+parser.add_argument("--comp_distortion", type=bool_flag, default=True,
                     help="Compute the distortion of the generator's outputs?")
 parser.add_argument("--quantize", type=bool_flag, default=False,
                     help="Perform quantization?")
 
 # visualization parameters
-parser.add_argument("--visualize", type=int, default=0,
-                    help="Number of transformation visualizations to save")
+parser.add_argument("--visualize", type=int, default=10,
+                    help="Number of transformation visualizations to save "
+                    "(0 to disable)")
 parser.add_argument("--padding", type=int, default=20,
                     help="Amount of padding (in pixels) between images in a "
                     "single plot")
@@ -47,13 +48,17 @@ parser.add_argument("--gpu_devices", nargs='+', type=int, default=[0],
 
 # reload
 parser.add_argument("--reload", type=str, default="",
-                    help="Path to a pre-trained conditional GAN")
+                    help="Path to a pre-trained conditional GAN (trained with "
+                    "train.py)")
 parser.add_argument("--clf_low_reload", type=str, default="",
-                    help="Path to a pre-trained low-frequency classifier")
+                    help="Path to a pre-trained low-frequency classifier "
+                    "(trained with classifier.py)")
 parser.add_argument("--clf_high_reload", type=str, default="",
-                    help="Path to a pre-trained high-frequency classifier")
+                    help="Path to a pre-trained high-frequency classifier "
+                    "(trained with classifier.py)")
 parser.add_argument("--est_reload", type=str, default="",
-                    help="Path to a pre-trained PRNU estimator")
+                    help="Path to a pre-trained PRNU estimator (trained with "
+                    "estimator.py)")
 parser.add_argument("--transformed_imgs_reload", type=str, default="",
                     help="Path to pre-computed transformed images '.pth' file")
 

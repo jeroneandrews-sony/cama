@@ -4,6 +4,7 @@ import subprocess
 from glob import glob
 from multiprocessing import Pool, cpu_count
 from os.path import exists, join
+from shutil import rmtree
 
 import config
 import numpy as np
@@ -328,7 +329,7 @@ def write_data(info):
     torch.save(img, save_name)
 
     # save remosaiced image
-    if config.remosaic:
+    if (config.remosaic) and ("examiner" not in save_name):
         remosaiced = remosaic(np.array(img).transpose(1, 2, 0)).\
             transpose(2, 0, 1)
         remosaiced = np.clip(remosaiced, 0, 255)
@@ -352,3 +353,6 @@ if __name__ == "__main__":
     # use multiprocessing Pool to speed things up
     with Pool(cpu_count() - 1) as p:
         list(tqdm(p.imap(write_data, data_info), total=len(data_info)))
+
+    # remove unpreprocessed dresden data
+    rmtree(config.data_dir)

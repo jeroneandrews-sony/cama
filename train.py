@@ -77,7 +77,7 @@ parser.add_argument("--clf_high_loss_schedule", nargs='+', type=float,
 parser.add_argument("--batch_size", type=int, default=32,
                     help="Batch size (training)")
 parser.add_argument("--test_batch_size", type=int, default=16,
-                    help="Batch size (validation / testing)")
+                    help="Batch size (validation)")
 parser.add_argument("--rnd_crops", type=bool_flag, default=False,
                     help="Extract patches randomly (True) or from a "
                     "non-overlapping grid (False)")
@@ -112,11 +112,14 @@ parser.add_argument("--reload", type=str, default="",
                     help="Path to a pre-trained conditional GAN (and "
                     "optimizer if saved)")
 parser.add_argument("--clf_low_reload", type=str, default="",
-                    help="Path to a pre-trained low-frequency classifier")
+                    help="Path to a pre-trained low-frequency classifier "
+                    "(trained with classifier.py)")
 parser.add_argument("--clf_high_reload", type=str, default="",
-                    help="Path to a pre-trained high-frequency classifier")
+                    help="Path to a pre-trained high-frequency classifier "
+                    "(trained with classifier.py)")
 parser.add_argument("--est_reload", type=str, default="",
-                    help="Path to a pre-trained PRNU estimator")
+                    help="Path to a pre-trained PRNU estimator (trained with "
+                    "estimator.py)")
 parser.add_argument("--resume", type=bool_flag, default=False,
                     help="Resume training")
 

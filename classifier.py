@@ -60,7 +60,7 @@ parser.add_argument("--optimizer", type=str, default="sgd,lr=0.1,"
                     "weight_decay=0.0005,momentum=0.9,nesterov=True",
                     help="Classifier optimizer (sgd,lr=0.1,"
                     "weight_decay=0.0005,momentum=0.9,nesterov=True / "
-                    "adagrad,lr=0.1,lr_decay=0.05'")
+                    "adagrad,lr=0.1,lr_decay=0.05")
 parser.add_argument("--save_opt", type=bool_flag, default=True,
                     help="Save optimizer")
 parser.add_argument("--lr_milestones", nargs='+', type=int, default=[45, 68],
@@ -79,7 +79,8 @@ parser.add_argument("--reload", type=str, default="",
                     help="Path to a pre-trained classifier (and optimizer if "
                     "saved)")
 parser.add_argument("--est_reload", type=str, default="",
-                    help="Path to a a pre-trained PRNU estimator")
+                    help="Path to a a pre-trained PRNU estimator (trained "
+                    "with estimator.py)")
 parser.add_argument("--resume", type=bool_flag, default=False,
                     help="Resume training")
 
