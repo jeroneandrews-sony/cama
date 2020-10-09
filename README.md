@@ -106,38 +106,38 @@ The number of unique samples in `adversary`, `examiner`, `test` and `test_outdis
 python estimator.py
 
 # main parameters
---user adversary # Dataset (adversary / examiner)
---ptc_sz 64 # Patch width/height
---ptc_fm 3 # Number of input feature maps (channels)
---expanded_cms False # Training with an expanded set of camera models (only valid if user is examiner)
+--user adversary                                # Dataset (adversary / examiner)
+--ptc_sz 64                                     # Patch width/height
+--ptc_fm 3                                      # Number of input feature maps (channels)
+--expanded_cms False                            # Training with an expanded set of camera models (only valid if user is examiner)
 
 # network architecture
---estimator_output prnu_lp # Estimate prnu_lp, i.e. prnu noise with linear pattern, of an rgb image (prnu_lp)
---nef 64 # Number of feature maps in the first and last convolutional layers
---n_blocks 2 # Number of residual blocks in the estimator
---drop_rate 0 # Dropout rate in the residual blocks
+--estimator_output prnu_lp                      # Estimate prnu_lp, i.e. prnu noise with linear pattern, of an rgb image (prnu_lp)
+--nef 64                                        # Number of feature maps in the first and last convolutional layers
+--n_blocks 2                                    # Number of residual blocks in the estimator
+--drop_rate 0                                   # Dropout rate in the residual blocks
 
 # training parameters
---batch_size 128 # Batch size (training)
---test_batch_size 32 # Batch size (validation / testing)")
---rnd_crops False # Extract patches randomly (True) or from a non-overlapping grid (False)
+--batch_size 128                                # Batch size (training)
+--test_batch_size 32                            # Batch size (validation / testing)")
+--rnd_crops False                               # Extract patches randomly (True) or from a non-overlapping grid (False)
 --n_epochs 90 # Total number of epochs
---n_samples_per_epoch 150000 # Number of training samples per epoch
---optimizer adam_standard,weight_decay=0.0005 # Estimator optimizer (adam_standard,weight_decay=0.0005 / sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True)
---save_opt True # Save optimizer
---lr_milestones [] # Epochs to divide learning rate by 10
+--n_samples_per_epoch 150000                    # Number of training samples per epoch
+--optimizer adam_standard,weight_decay=0.0005   # Estimator optimizer (adam_standard,weight_decay=0.0005 / sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True)
+--save_opt True                                 # Save optimizer
+--lr_milestones []                              # Epochs to divide learning rate by 10
 
 # loaders / gpus
---n_workers 10 # Number of workers per data loader
---pin_memory True # Pin memory of data loaders
---gpu_devices 0 # Which gpu devices to use
+--n_workers 10                                  # Number of workers per data loader
+--pin_memory True                               # Pin memory of data loaders
+--gpu_devices 0                                 # Which gpu devices to use
 
 # reload
---reload "" # Path to a pre-trained estimator (and optimizer if saved)
---resume False # Resume training
+--reload ""                                     # Path to a pre-trained estimator (and optimizer if saved)
+--resume False                                  # Resume training
 
 # debug
---debug False # Debug mode (only use a subset of the available data)
+--debug False                                   # Debug mode (only use a subset of the available data)
 ```
 
 
@@ -146,39 +146,39 @@ python estimator.py
 python classifier.py
 
 # main parameters
---user adversary # Dataset (adversary / examiner)
---ptc_sz 64 # Patch width/height
---ptc_fm 3 # Number of input feature maps (channels)
---expanded_cms False # Training with an expanded set of camera models (only valid if user is examiner)
+--user adversary                                                        # Dataset (adversary / examiner)
+--ptc_sz 64                                                             # Patch width/height
+--ptc_fm 3                                                              # Number of input feature maps (channels)
+--expanded_cms False                                                    # Training with an expanded set of camera models (only valid if user is examiner)
 
 # network architecture
---clf_input rgb # classifier mode {'prnu', 'prnu_lp', 'image'}
---clf_architecture resnet18 # Classifier architecture (vgg11 / vgg13 / vgg16 / vgg19 / resnet18 / resnet34 / resnet50 / densenet40 / densenet100)
---drop_rate 0.5 # Dropout in the classifier
---efficient False # Memory efficient (but slower) training for DenseNet models
+--clf_input rgb                                                         # classifier mode {'prnu', 'prnu_lp', 'image'}
+--clf_architecture resnet18                                             # Classifier architecture (vgg11 / vgg13 / vgg16 / vgg19 / resnet18 / resnet34 / resnet50 / densenet40 / densenet100)
+--drop_rate 0.5                                                         # Dropout in the classifier
+--efficient False                                                       # Memory efficient (but slower) training for DenseNet models
 
 # training parameters
---batch_size 128 # Batch size (training)
---test_batch_size 16 # Batch size (validation / testing)")
---rnd_crops False # Extract patches randomly (True) or from a non-overlapping grid (False)
---n_epochs 90 # Total number of epochs
---n_samples_per_epoch 150000 # Number of training samples per epoch
---optimizer sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True # Classifier optimizer (sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True / adagrad,lr=0.1,lr_decay=0.05)
---save_opt True # Save optimizer
---lr_milestones 45 68 # Epochs to divide learning rate by 10
+--batch_size 128                                                        # Batch size (training)
+--test_batch_size 16                                                    # Batch size (validation / testing)")
+--rnd_crops False                                                       # Extract patches randomly (True) or from a non-overlapping grid (False)
+--n_epochs 90                                                           # Total number of epochs
+--n_samples_per_epoch 150000                                            # Number of training samples per epoch
+--optimizer sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True   # Classifier optimizer (sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True / adagrad,lr=0.1,lr_decay=0.05)
+--save_opt True                                                         # Save optimizer
+--lr_milestones 45 68                                                   # Epochs to divide learning rate by 10
 
 # loaders / gpus
---n_workers 10 # Number of workers per data loader
---pin_memory True # Pin memory of data loaders
---gpu_devices 0 # Which gpu devices to use
+--n_workers 10                                                          # Number of workers per data loader
+--pin_memory True                                                       # Pin memory of data loaders
+--gpu_devices 0                                                         # Which gpu devices to use
 
 # reload
---reload "" # Path to a pre-trained classifier (and optimizer if saved)
---est_reload "" # Path to a a pre-trained PRNU estimator (trained with estimator.py)
---resume False # Resume training
+--reload ""                                                             # Path to a pre-trained classifier (and optimizer if saved)
+--est_reload ""                                                         # Path to a a pre-trained PRNU estimator (trained with estimator.py)
+--resume False                                                          # Resume training
 
 # debug
---debug False # Debug mode (only use a subset of the available data)
+--debug False                                                           # Debug mode (only use a subset of the available data)
 ```
 
 #### Train Cama
@@ -186,55 +186,55 @@ python classifier.py
 python train.py
 
 # main parameters
---ptc_sz 64 # Patch width/height
---ptc_fm 3 # Number of input feature maps (channels)
+--ptc_sz 64                         # Patch width/height
+--ptc_fm 3                          # Number of input feature maps (channels)
 
 # generator architecture
---gen_input remosaic # Generator input (rgb / remosaic)
---ngf 64 # Number of feature maps in the generator's first and last convolutional layers
---n_blocks 2 # Number of residual blocks in the generator
+--gen_input remosaic                # Generator input (rgb / remosaic)
+--ngf 64                            # Number of feature maps in the generator's first and last convolutional layers
+--n_blocks 2                        # Number of residual blocks in the generator
 
 # discriminator architecture
---dis_input con_conv # Classifier input (prnu_lp / rgb / con_conv / prnu_lp_low+prnu_lp)
---ndf 64 # Number of feature maps in the discriminator's first convolutional layer 
---use_lsgan True # Least squares GAN
---dis_type patch # Discriminator type (patch / pixel)
---n_dis_layers 2 # Number of discriminator layers (only used if the discriminator is a patch discriminator)
---dis_drop_rate 0 # Dropout in the discriminator
+--dis_input con_conv                # Classifier input (prnu_lp / rgb / con_conv / prnu_lp_low+prnu_lp)
+--ndf 64                            # Number of feature maps in the discriminator's first convolutional layer 
+--use_lsgan True                    # Least squares GAN
+--dis_type patch                    # Discriminator type (patch / pixel)
+--n_dis_layers 2                    # Number of discriminator layers (only used if the discriminator is a patch discriminator)
+--dis_drop_rate 0                   # Dropout in the discriminator
 
 # training parameters
 --pixel_loss l1 # Pixel-wise loss (l1 / l2)
---pixel_loss_schedule 10.0, 0 # First argument: pixel loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
---adv_loss_schedule 1.0, 0 # First argument: adversarial loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the adversarial loss coefficient (0 to disable).
---clf_low_loss_schedule 0.005, 0 # First argument: low-frequency classifier loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
---clf_high_loss_schedule 0.005, 0 # First argument: high-frequency classifier loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
---batch_size 128 # Batch size (training)
---test_batch_size 16 # Batch size (validation)
---rnd_crops False # Extract patches randomly (True) or from a non-overlapping grid (False)
+--pixel_loss_schedule 10.0, 0       # First argument: pixel loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
+--adv_loss_schedule 1.0, 0          # First argument: adversarial loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the adversarial loss coefficient (0 to disable).
+--clf_low_loss_schedule 0.005, 0    # First argument: low-frequency classifier loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
+--clf_high_loss_schedule 0.005, 0   # First argument: high-frequency classifier loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
+--batch_size 128                    # Batch size (training)
+--test_batch_size 16                # Batch size (validation)
+--rnd_crops False                   # Extract patches randomly (True) or from a non-overlapping grid (False)
 --n_epochs 200 # Total number of epochs
---n_samples_per_epoch 150000 # Number of training samples per epoch
---gen_optimizer adam,lr=0.0002 # Generator optimizer (adam,lr=0.0002)
---dis_optimizer adam,lr=0.0002 # Discriminator optimizer (adam,lr=0.0002)
---save_opt True # Save optimizer
---lr_milestones [] # Epochs to divide learning rate by 10
+--n_samples_per_epoch 150000        # Number of training samples per epoch
+--gen_optimizer adam,lr=0.0002      # Generator optimizer (adam,lr=0.0002)
+--dis_optimizer adam,lr=0.0002      # Discriminator optimizer (adam,lr=0.0002)
+--save_opt True                     # Save optimizer
+--lr_milestones []                  # Epochs to divide learning rate by 10
 
 # visualization parameters
---padding 20 # Amount of padding (in pixels) between images in a single plot
+--padding 20                        # Amount of padding (in pixels) between images in a single plot
 
 # loaders / gpus
---n_workers 8 # Number of workers per data loader
---pin_memory True # Pin memory of data loaders
---gpu_devices 0 # Which gpu devices to use
+--n_workers 8                       # Number of workers per data loader
+--pin_memory True                   # Pin memory of data loaders
+--gpu_devices 0                     # Which gpu devices to use
 
 # reload
---reload "" # Path to a pre-trained conditional GAN (and optimizer if saved)
---clf_low_reload "" # Path to a pre-trained low-frequency classifier (trained with classifier.py)
---clf_high_reload "" # Path to a pre-trained high-frequency classifier (trained with classifier.py)
---est_reload "" # Path to a a pre-trained PRNU estimator (trained with estimator.py)
---resume False # Resume training
+--reload ""                         # Path to a pre-trained conditional GAN (and optimizer if saved)
+--clf_low_reload ""                 # Path to a pre-trained low-frequency classifier (trained with classifier.py)
+--clf_high_reload ""                # Path to a pre-trained high-frequency classifier (trained with classifier.py)
+--est_reload ""                     # Path to a a pre-trained PRNU estimator (trained with estimator.py)
+--resume False                      # Resume training
 
 # debug
---debug False # Debug mode (only use a subset of the available data)
+--debug False                       # Debug mode (only use a subset of the available data)
 ```
 
 
@@ -243,28 +243,28 @@ python train.py
 python test.py
 
 # main parameters
---ptc_fm 3 # Number of input feature maps (channels)
+--ptc_fm 3                      # Number of input feature maps (channels)
 
 # testing parameters
---test_batch_size 16 # Batch size (testing)
---in_dist True # Are the test images in-distribution, i.e. captured by camera models known to conditional GAN?
---comp_distortion True # Compute the distortion of the generator's outputs?
---quantize False # Perform quantization?
+--test_batch_size 16            # Batch size (testing)
+--in_dist True                  # Are the test images in-distribution, i.e. captured by camera models known to conditional GAN?
+--comp_distortion True          # Compute the distortion of the generator's outputs?
+--quantize False                # Perform quantization?
 
 # visualization parameters
---visualize 10 # Number of transformation visualizations to save (0 to disable)
---padding 20 # Amount of padding (in pixels) between images in a single plot
+--visualize 10                  # Number of transformation visualizations to save (0 to disable)
+--padding 20                    # Amount of padding (in pixels) between images in a single plot
 
 # loaders / gpus
---n_workers 8 # Number of workers per data loader
---pin_memory True # Pin memory of data loaders
---gpu_devices 0 # Which gpu devices to use
+--n_workers 8                   # Number of workers per data loader
+--pin_memory True               # Pin memory of data loaders
+--gpu_devices 0                 # Which gpu devices to use
 
 # reload
---reload "" # Path to a pre-trained conditional GAN (trained with train.py)
---clf_low_reload "" # Path to a pre-trained low-frequency classifier (trained with classifier.py)
---clf_high_reload "" # Path to a pre-trained high-frequency classifier (trained with classifier.py)
---est_reload "" # Path to a a pre-trained PRNU estimator (trained with estimator.py)
---transformed_imgs_reload "" # Path to pre-computed transformed images '.pth' file
+--reload ""                     # Path to a pre-trained conditional GAN (trained with train.py)
+--clf_low_reload ""             # Path to a pre-trained low-frequency classifier (trained with classifier.py)
+--clf_high_reload ""            # Path to a pre-trained high-frequency classifier (trained with classifier.py)
+--est_reload ""                 # Path to a a pre-trained PRNU estimator (trained with estimator.py)
+--transformed_imgs_reload ""    # Path to pre-computed transformed images '.pth' file
 ```
 
