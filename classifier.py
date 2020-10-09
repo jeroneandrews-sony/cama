@@ -125,7 +125,8 @@ if centre_crop_size % params.ptc_sz != 0:
 
 assert params.user in ["adversary", "examiner"], "user must be adversary or "
 "examiner"
-assert params.clf_input in get_valid_input_names(), "invalid classifier input"
+assert params.clf_input in get_valid_input_names(mode="all"), "invalid "
+"classifier input"
 
 # set data paths
 params.train_root = os.path.join(preproc_img_dir, params.user, "train")

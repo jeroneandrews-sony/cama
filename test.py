@@ -8,8 +8,8 @@ from data.config import centre_crop_size, preproc_img_dir
 from src.loader import dataset_loader
 from src.models.utils import Classifier, Estimator, Generator
 from src.testing import GAN_Tester
-from src.utils import (bool_flag, glob_get_path, initialize_test_exp,
-                       reload_params, reload_state_dict)
+from src.utils import (bool_flag, get_valid_input_names, glob_get_path,
+                       initialize_test_exp, reload_params, reload_state_dict)
 
 # parse parameters
 parser = argparse.ArgumentParser(description="Conditional GAN testing for "
@@ -117,6 +117,9 @@ if params.clf_low_reload:
     assert os.path.isfile(params.clf_low_reload), "(low-frequency) classifier "
     "reload file does not exist"
     clf_low_params = reload_params(params.clf_low_reload)
+    assert clf_low_params.clf_input in get_valid_input_names(mode="low"), \
+        "(low-frequency) classifier input must be in %s" \
+        % get_valid_input_names(mode="low")
     params.clf_low_input = clf_low_params.clf_input
     clf_low = Classifier(clf_low_params)
 else:
@@ -127,6 +130,9 @@ if params.clf_high_reload:
     assert os.path.isfile(params.clf_high_reload), "(high-frequency) "
     "classifier reload file does not exist"
     clf_high_params = reload_params(params.clf_high_reload)
+    assert clf_high_params.clf_input in get_valid_input_names(mode="high"), \
+        "(high-frequency) classifier input must be in %s" \
+        % get_valid_input_names(mode="high")
     params.clf_high_input = clf_high_params.clf_input
     if "prnu_lp" in clf_high_params.clf_input:
         assert os.path.isfile(params.est_reload), "estimator reload file "

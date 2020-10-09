@@ -30,14 +30,23 @@ if not os.path.exists(MODELS_PATH):
 logger = getLogger()
 
 
-def get_valid_input_names():
+def get_valid_input_names(mode="all"):
     """
     Get valid input names.
     """
-    valid_inputs = ["con_conv", "finite_difference", "fixed_hpf"]
-    valid_inputs += ["rgb+" + x for x in valid_inputs]
-    valid_inputs += ["rgb", "prnu_lp", "prnu_lp_low", "prnu_lp_low+prnu_lp"]
-    return valid_inputs
+    low_freq_inputs = ["rgb", "prnu_lp_low"]
+    low_freq_inputs += ["rgb+" + x for x in ["con_conv", "finite_difference",
+                                             "fixed_hpf"]]
+    high_freq_inputs = ["con_conv", "finite_difference", "fixed_hpf",
+                        "prnu_lp"]
+    if mode == "all":
+        return low_freq_inputs + high_freq_inputs
+    elif mode == "low":
+        return low_freq_inputs
+    elif mode == "high":
+        return high_freq_inputs
+    else:
+        raise Exception("Unknown get valid input name mode '%s'" % mode)
 
 
 def glob_get_path(path):

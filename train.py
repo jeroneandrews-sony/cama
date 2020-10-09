@@ -192,8 +192,8 @@ assert params.gen_input in ["rgb", "remosaic"], "invalid generator input (rgb "
 "/ remosaic)"
 assert params.dis_type in ["patch", "pixel"], "invalid discriminator type "
 "(patch / pixel)"
-assert params.dis_input in get_valid_input_names(), "invalid discriminator "
-"input"
+assert params.dis_input in get_valid_input_names(mode="all"), "invalid "
+"discriminator input"
 assert params.pixel_loss in ["l1", "l2"], "invalid pixel loss (l1 / l2)"
 
 if "prnu_lp" in params.dis_input:
@@ -248,6 +248,9 @@ if params.clf_low_reload:
     assert os.path.isfile(params.clf_low_reload), "(low-frequency) classifier "
     "reload file does not exist"
     clf_low_params = reload_params(params.clf_low_reload)
+    assert clf_low_params.clf_input in get_valid_input_names(mode="low"), \
+        "(low-frequency) classifier input must be in %s" \
+        % get_valid_input_names(mode="low")
     params.clf_low_input = clf_low_params.clf_input
     clf_low = Classifier(clf_low_params)
 else:
@@ -259,6 +262,9 @@ if params.clf_high_reload:
     assert os.path.isfile(params.clf_high_reload), "(high-frequency) "
     "classifier reload file does not exist"
     clf_high_params = reload_params(params.clf_high_reload)
+    assert clf_high_params.clf_input in get_valid_input_names(mode="high"), \
+        "(high-frequency) classifier input must be in %s" \
+        % get_valid_input_names(mode="high")
     params.clf_high_input = clf_high_params.clf_input
     if "prnu_lp" in clf_high_params.clf_input:
         assert os.path.isfile(params.est_reload), "estimator reload file "
