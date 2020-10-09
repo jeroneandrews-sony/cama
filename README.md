@@ -1,5 +1,5 @@
 # Conditional Adversarial Camera Model Anonymization
-PyTorch implementation of [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798) (ECCV 2020 Advances in Image Manipulation Workshop).
+PyTorch implementation of [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798) (Proceedings of the European Conference on Computer Vision (ECCV) 2020 Advances in Image Manipulation Workshop).
 
 ## Contents
 * [Problem description](#problem-description)
@@ -9,6 +9,7 @@ PyTorch implementation of [Conditional Adversarial Camera Model Anonymization](h
 * [Dataset](#dataset)
 * [Training](#training)
 * [Testing](#testing)
+* [References](#references)
 
 ### Problem description
 #### Camera model attribution
@@ -293,3 +294,17 @@ python test.py
 --est_reload ""                 # Path to a a pre-trained PRNU estimator (trained with estimator.py)
 --transformed_imgs_reload ""    # Path to pre-computed transformed images '.pth' file
 ```
+
+## References
+Andrews, J.T.A., Zhang, Y. and Griffin, L.D., 2020. [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798). *Proceedings of the European Conference on Computer Vision (ECCV) Workshops*.
+
+```
+@InProceedings{Andrews_2020_ECCV_Workshops},
+author = {Andrews, Jerone T A and Zhang, Yidan and Griffin, Lewis D},
+title = {Conditional Adversarial Camera Model Anonymization},
+booktitle = {Proceedings of the European Conference on Computer Vision (ECCV) Workshops},
+year = {2020}
+}
+```
+
+Contact: [jerone.andrews@cs.ucl.ac.uk](mailto:jerone.andrews@cs.ucl.ac.uk)
