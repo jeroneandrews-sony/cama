@@ -1,17 +1,25 @@
 # Conditional Adversarial Camera Model Anonymization
-
 PyTorch implementation of [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798) (ECCV 2020 Advances in Image Manipulation Workshop).
 
-## Problem description
-### Camera model attribution
-Digital photographs can be **blindly** attributed to the specific camera model used for capture.
+## Contents
+* [Problem description](#problem-description)
+* [Cama architecture description](#cama-architecture-description)
+* [Dependencies](#dependencies)
+* [Installation](#installation)
+* [Dataset](#dataset)
+* [Training](#training)
+* [Testing](#testing)
+
+### Problem description
+#### Camera model attribution
+Digital photographs can be *blindly* attributed to the specific camera model used for capture.
 
 <p align="center"><img src="images/blind-att.png"  /></p>
 
-### Camera model anonymization
+#### Camera model anonymization
 Conditional Adversarial Camera Model Anonymization (Cama) offers a way to preserve privacy by transforming these artifacts such that the apparent capture model is changed (targeted transformation). That is, given an image and a target label condition, the applied transformation causes a non-interactive black-box *target* (i.e. to be attacked/fooled) convnet classifier <img src="https://render.githubusercontent.com/render/math?math=\large F"> to predict the target label given the transformed image. While at the same time retaining the original image content.
 
-However, Cama is trained in a **non-interactive black-box setting**: Cama does not have knowledge of the parameters, architecture or training randomness of <img src="https://render.githubusercontent.com/render/math?math=\large F">, nor can Cama interact with it. 
+However, Cama is trained in a *non-interactive black-box setting*: Cama does not have knowledge of the parameters, architecture or training randomness of <img src="https://render.githubusercontent.com/render/math?math=\large F">, nor can Cama interact with it. 
 
 <p align="center"><img src="images/cam-anon.png" /></p>
 
@@ -29,7 +37,7 @@ Example (below) of Cama transformed images <img src="https://render.githubuserco
 
 <p align="center"><img src="images/building.png" /></p>
 
-### Previous approaches to camera model anonymization
+#### Previous approaches to camera model anonymization
 Previous works view anonymisation as requiring the transformation of pixel non-uniformity (PNU) noise, which is defined as slight variations in the sensitivity of individual pixel sensors. Although initially device-specific, these variations propagate nonlinearly through a digital camera's processing steps that result in the viewable image, and thus end up also depending on model-specific aspects.
 
 Model anonymization approaches based on PNU suppress the image content, using a denoising filter, and instead work with the noise residual, i.e. the observed image minus the estimated noise-free image content.
@@ -37,12 +45,12 @@ This is premised on improving the signal-to-noise ratio between the model-specif
 
 <p align="center"><img src="images/previous-works.png" /></p>
 
-## Cama architecture description
+### Cama architecture description
 We denote by <img src="https://render.githubusercontent.com/render/math?math=\large x\in\mathbb{R}^d"> and <img src="https://render.githubusercontent.com/render/math?math=\large y\in\mathbb{N}_c=\{1,\dots,c\}"> an image and its ground truth (source) camera model label, respectively, sampled from a dataset <img src="https://render.githubusercontent.com/render/math?math=\large p_{\text{data}}">. Consider a *target* (i.e. to be attacked) convnet classifier <img src="https://render.githubusercontent.com/render/math?math=\large F"> with <img src="https://render.githubusercontent.com/render/math?math=\large c"> classes trained over input-output tuples <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim p_{\mathrm{data}}(x,y)">. Given <img src="https://render.githubusercontent.com/render/math?math=\large x">, <img src="https://render.githubusercontent.com/render/math?math=\large F"> outputs a prediction vector of class probabilities <img src="https://render.githubusercontent.com/render/math?math=\large F:x\mapsto F(x)\in[0,1]^{c}">.
 
-As aforementioned, Cama operates in a **non-interactive black-box setting**. We do, however, assume that Cama can sample from a dataset similar to <img src="https://render.githubusercontent.com/render/math?math=\large p_{\mathrm{data}}">, which we denote by <img src="https://render.githubusercontent.com/render/math?math=\large q_{\mathrm{data}}">. Precisely, Cama can sample tuples of the following form: <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim q_{\text{data}}(x,y)"> s.t. <img src="https://render.githubusercontent.com/render/math?math=\large y\in\mathbb{N}_{c^'}">, where <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim q_{\text{data}}(x,y)"> s.t. <img src="https://render.githubusercontent.com/render/math?math=\large c^' \leq c">. That is, the set of possible image class labels in <img src="https://render.githubusercontent.com/render/math?math=\large p_{\text{data}}"> is a superset of the set of possible image class labels in <img src="https://render.githubusercontent.com/render/math?math=\large q_{\text{data}}">, i.e. <img src="https://render.githubusercontent.com/render/math?math=\large \mathbb{N}_{c}\supseteq \mathbb{N}_{c'}">.
+As aforementioned, Cama operates in a *non-interactive black-box setting*. We do, however, assume that Cama can sample from a dataset similar to <img src="https://render.githubusercontent.com/render/math?math=\large p_{\mathrm{data}}">, which we denote by <img src="https://render.githubusercontent.com/render/math?math=\large q_{\mathrm{data}}">. Precisely, Cama can sample tuples of the following form: <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim q_{\text{data}}(x,y)"> s.t. <img src="https://render.githubusercontent.com/render/math?math=\large y\in\mathbb{N}_{c^'}">, where <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim q_{\text{data}}(x,y)"> s.t. <img src="https://render.githubusercontent.com/render/math?math=\large c^' \leq c">. That is, the set of possible image class labels in <img src="https://render.githubusercontent.com/render/math?math=\large p_{\text{data}}"> is a superset of the set of possible image class labels in <img src="https://render.githubusercontent.com/render/math?math=\large q_{\text{data}}">, i.e. <img src="https://render.githubusercontent.com/render/math?math=\large \mathbb{N}_{c}\supseteq \mathbb{N}_{c'}">.
 
-Suppose <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim q_{\text{data}}(x,y)"> and <img src="https://render.githubusercontent.com/render/math?math=\large y^' \in\mathbb{N}_{c^'}">, where <img src="https://render.githubusercontent.com/render/math?math=\large y^' \neq y"> is a target label. Our aim is to learn a function <img src="https://render.githubusercontent.com/render/math?math=\large G:(x,y^')\mapsto x^' \approx x"> s.t. the maximum probability satisfies <img src="https://render.githubusercontent.com/render/math?math=\large \argmax_{i} F(x^')_i=y^'">. This is known as a *targeted* attack, whereas the maximum probability of an *untargeted* attack must satisfy <img src="https://render.githubusercontent.com/render/math?math=\large \arg \max_{i} F(x^')_i\neq y">. **Cama performs targeted attacks.**
+Suppose <img src="https://render.githubusercontent.com/render/math?math=\large (x,y)\sim q_{\text{data}}(x,y)"> and <img src="https://render.githubusercontent.com/render/math?math=\large y^' \in\mathbb{N}_{c^'}">, where <img src="https://render.githubusercontent.com/render/math?math=\large y^' \neq y"> is a target label. Our aim is to learn a function <img src="https://render.githubusercontent.com/render/math?math=\large G:(x,y^')\mapsto x^' \approx x"> s.t. the maximum probability satisfies <img src="https://render.githubusercontent.com/render/math?math=\large \argmax_{i} F(x^')_i=y^'">. This is known as a *targeted* attack, whereas the maximum probability of an *untargeted* attack must satisfy <img src="https://render.githubusercontent.com/render/math?math=\large \arg \max_{i} F(x^')_i\neq y">. *Cama performs targeted attacks*.
 
 <p align="center"><img src="images/model.png" /></p>
 
@@ -58,13 +66,12 @@ whereas <img src="https://render.githubusercontent.com/render/math?math=\large D
 <p align="center"><img src="images/d-minimizes.png" width="700" /></p>
 
 
-## Getting started
-### Dependencies
+## Dependencies
 * Python 3
 * CUDA
 * [PyTorch](http://pytorch.org/) (1.6.0), [torchvision](https://github.com/pytorch/vision/) (0.7.0), [torchsummary](https://github.com/sksq96/pytorch-summary) (1.5.1), [SciPy](https://www.scipy.org) (1.4.1), [PyWavelets](https://pywavelets.readthedocs.io/en/latest/) (1.1.1), [scikit-image](https://scikit-image.org/) (0.16.2), [pandas](https://pandas.pydata.org) (1.1.3), [requests](https://requests.readthedocs.io/en/master/) (2.24.0), [matplotlib](https://matplotlib.org/) (3.2.1), [NumPy](https://numpy.org/) (1.17.4), [tqdm](https://github.com/tqdm/tqdm/) (4.45.0), [colour-demosaicing](https://pypi.org/project/colour-demosaicing/) (0.1.5), [Pillow](https://pillow.readthedocs.io/en/stable/) (7.2.0)
 
-### Installation
+## Installation
 Simply clone this repository:
 
 ```bash
@@ -73,7 +80,7 @@ cd cama
 pip install -r requirements.txt
 ```
 
-### Dataset
+## Dataset
 To download and preprocess the [Dresden image database](http://forensics.inf.tu-dresden.de/ddimgdb/) of JPEG colour images captured by 27 unique camera models run:
 
 ```bash
@@ -100,9 +107,17 @@ Each of the above folders (e.g. `data/dataset/dresden_preprocessed/image`) conta
 
 The number of unique samples in `adversary`, `examiner`, `test` and `test_outdist` should be 2508, 2463, 600 and 600, respectively. 
 
-### Training
-#### Train a PRNU estimator
-To train Cama you must first train a PRNU estimator, since it is required for the adversarial training process. (Specifically, it is required by the adversarial evaluator). To train an estimator run `estimator.py`. See below for a full list of possible parameters:
+## Training
+To reproduce the results in the paper, run the following scripts:
+
+```bash
+./scripts/estimator.sh
+./scripts/classifier.sh
+./scripts/anonymize.sh
+```
+
+### Train a PRNU estimator
+To train Cama you must first train a PRNU estimator, since it is required for the adversarial training process. (Specifically, it is required by the adversarial evaluator). To train an estimator run `python estimator.py`. See below for a full list of possible parameters:
 
 ```bash
 python estimator.py
@@ -143,8 +158,8 @@ python estimator.py
 ```
 
 
-#### Train an evaluator
-Cama requires a dual-stream evaluator. Each stream is trained seperately. To train Cama's high-frequency evaluator stream run `classifier.py --clf_input prnu_lp --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`.  To train Cama's low-frequency evaluator stream run `classifier.py --clf_input prnu_lp_low --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
+### Train an evaluator
+Cama requires a dual-stream evaluator. Each stream is trained seperately. To train Cama's high-frequency evaluator stream run `python classifier.py --clf_input prnu_lp --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`.  To train Cama's low-frequency evaluator stream run `python classifier.py --clf_input prnu_lp_low --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
 
 ```bash
 python classifier.py
@@ -186,9 +201,9 @@ momentum=0.9,nesterov=True                      # Classifier optimizer (sgd,lr=0
 --debug False                                   # Debug mode (only use a subset of the available data)
 ```
 
-#### Train Cama
+### Train Cama
 
-(Assuming you have trained a PRNU estimator, a high-frequency evaluator and alow-frequency evaluator). To train Cama run `train.py --clf_low_reload [PATH_TO_LOW_FREQ_EVALUATOR.pth] --clf_high_reload PATH_TO_HIGH_FREQ_EVALUATOR --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
+(Assuming you have trained a PRNU estimator, a high-frequency evaluator and alow-frequency evaluator). To train Cama run `python train.py --clf_low_reload [PATH_TO_LOW_FREQ_EVALUATOR.pth] --clf_high_reload PATH_TO_HIGH_FREQ_EVALUATOR --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
 
 ```bash
 python train.py
@@ -246,7 +261,9 @@ python train.py
 ```
 
 
-### Testing
+## Testing
+Given a trained Cama model, to test its anonymization ability (attack success rates and distortion) on in-distribution or out-of-distribution test data run `python test.py`. Note that you must provide a path to either a low- or high-frequency non-interactive black-box target classifiers, which can be trained using `classifier.py`. See below for a full list of possible parameters:
+
 ```bash
 python test.py
 
@@ -258,6 +275,7 @@ python test.py
 --in_dist True                  # Are the test images in-distribution, i.e. captured by camera models known to conditional GAN?
 --comp_distortion True          # Compute the distortion of the generator's outputs?
 --quantize False                # Perform quantization?
+--save_transformed_imgs False   # Save the transformed images to disk for reuse during other runs of testing?
 
 # visualization parameters
 --visualize 10                  # Number of transformation visualizations to save (0 to disable)
@@ -275,4 +293,3 @@ python test.py
 --est_reload ""                 # Path to a a pre-trained PRNU estimator (trained with estimator.py)
 --transformed_imgs_reload ""    # Path to pre-computed transformed images '.pth' file
 ```
-

@@ -29,6 +29,9 @@ parser.add_argument("--comp_distortion", type=bool_flag, default=True,
                     help="Compute the distortion of the generator's outputs?")
 parser.add_argument("--quantize", type=bool_flag, default=False,
                     help="Perform quantization?")
+parser.add_argument("--save_transformed_imgs", type=bool_flag, default=False,
+                    help="Save the transformed images to disk for reuse "
+                    "during other runs of testing?")
 
 # visualization parameters
 parser.add_argument("--visualize", type=int, default=10,

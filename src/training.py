@@ -1,17 +1,13 @@
-import json
-import random
 from logging import getLogger
 
 import numpy as np
 import torch
 from torchsummary import summary
 
-from .models.losses import (bce_logits_loss, gan_loss, l1_loss, mse_loss,
-                            xent_loss)
+from .models.losses import (gan_loss, l1_loss, mse_loss, xent_loss)
 from .models.utils import update_con_conv
 from .utils import (generate_targets, get_optimizer, lambda_coeff, preprocess,
-                    reload_state_dict, reverse_preprocess, save_state,
-                    schedule_lr)
+                    reload_state_dict, save_state, schedule_lr)
 
 logger = getLogger()
 

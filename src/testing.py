@@ -275,7 +275,8 @@ class GAN_Tester(object):
                     delta))
 
                 # save the images
-                self.save_images(ims_to_plot, len(range_), v)
+                if params.save_transformed_imgs:
+                    self.save_images(ims_to_plot, len(range_), v)
 
         # initialize logs
         log_psnr = []
