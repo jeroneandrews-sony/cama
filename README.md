@@ -121,7 +121,7 @@ python estimator.py
 --batch_size 128                                # Batch size (training)
 --test_batch_size 32                            # Batch size (validation / testing)")
 --rnd_crops False                               # Extract patches randomly (True) or from a non-overlapping grid (False)
---n_epochs 90 # Total number of epochs
+--n_epochs 90                                   # Total number of epochs
 --n_samples_per_epoch 150000                    # Number of training samples per epoch
 --optimizer adam_standard,weight_decay=0.0005   # Estimator optimizer (adam_standard,weight_decay=0.0005 / sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True)
 --save_opt True                                 # Save optimizer
@@ -163,7 +163,8 @@ python classifier.py
 --rnd_crops False                                                       # Extract patches randomly (True) or from a non-overlapping grid (False)
 --n_epochs 90                                                           # Total number of epochs
 --n_samples_per_epoch 150000                                            # Number of training samples per epoch
---optimizer sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True   # Classifier optimizer (sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True / adagrad,lr=0.1,lr_decay=0.05)
+--optimizer sgd,lr=0.1 \
+,weight_decay=0.0005,momentum=0.9,nesterov=True   # Classifier optimizer (sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True / adagrad,lr=0.1,lr_decay=0.05)
 --save_opt True                                                         # Save optimizer
 --lr_milestones 45 68                                                   # Epochs to divide learning rate by 10
 
@@ -203,7 +204,7 @@ python train.py
 --dis_drop_rate 0                   # Dropout in the discriminator
 
 # training parameters
---pixel_loss l1 # Pixel-wise loss (l1 / l2)
+--pixel_loss l1                     # Pixel-wise loss (l1 / l2)
 --pixel_loss_schedule 10.0, 0       # First argument: pixel loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
 --adv_loss_schedule 1.0, 0          # First argument: adversarial loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the adversarial loss coefficient (0 to disable).
 --clf_low_loss_schedule 0.005, 0    # First argument: low-frequency classifier loss feedback coefficient (0 to disable). Second argument: epochs to progressively increase the pixel loss coefficient (0 to disable).
@@ -211,7 +212,7 @@ python train.py
 --batch_size 128                    # Batch size (training)
 --test_batch_size 16                # Batch size (validation)
 --rnd_crops False                   # Extract patches randomly (True) or from a non-overlapping grid (False)
---n_epochs 200 # Total number of epochs
+--n_epochs 200                      # Total number of epochs
 --n_samples_per_epoch 150000        # Number of training samples per epoch
 --gen_optimizer adam,lr=0.0002      # Generator optimizer (adam,lr=0.0002)
 --dis_optimizer adam,lr=0.0002      # Discriminator optimizer (adam,lr=0.0002)
