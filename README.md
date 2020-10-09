@@ -296,6 +296,8 @@ python test.py
 ```
 
 ## References
+If you find this repository useful, please consider citing the following:
+
 Andrews, J.T.A., Zhang, Y. and Griffin, L.D., 2020. [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798). *Proceedings of the European Conference on Computer Vision (ECCV) Workshops*.
 
 ```
