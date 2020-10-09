@@ -146,40 +146,40 @@ python estimator.py
 python classifier.py
 
 # main parameters
---user adversary                                                        # Dataset (adversary / examiner)
---ptc_sz 64                                                             # Patch width/height
---ptc_fm 3                                                              # Number of input feature maps (channels)
---expanded_cms False                                                    # Training with an expanded set of camera models (only valid if user is examiner)
+--user adversary                                # Dataset (adversary / examiner)
+--ptc_sz 64                                     # Patch width/height
+--ptc_fm 3                                      # Number of input feature maps (channels)
+--expanded_cms False                            # Training with an expanded set of camera models (only valid if user is examiner)
 
 # network architecture
---clf_input rgb                                                         # classifier mode {'prnu', 'prnu_lp', 'image'}
---clf_architecture resnet18                                             # Classifier architecture (vgg11 / vgg13 / vgg16 / vgg19 / resnet18 / resnet34 / resnet50 / densenet40 / densenet100)
---drop_rate 0.5                                                         # Dropout in the classifier
---efficient False                                                       # Memory efficient (but slower) training for DenseNet models
+--clf_input rgb                                 # Classifier input (con_conv / finite_difference / fixed_hpf / rgb+con_conv / rgb+finite_difference / rgb+fixed_hpf / rgb / prnu_lp / prnu_lp_low)
+--clf_architecture resnet18                     # Classifier architecture (vgg11 / vgg13 / vgg16 / vgg19 / resnet18 / resnet34 / resnet50 / densenet40 / densenet100)
+--drop_rate 0.5                                 # Dropout in the classifier
+--efficient False                               # Memory efficient (but slower) training for DenseNet models
 
 # training parameters
---batch_size 128                                                        # Batch size (training)
---test_batch_size 16                                                    # Batch size (validation / testing)")
---rnd_crops False                                                       # Extract patches randomly (True) or from a non-overlapping grid (False)
---n_epochs 90                                                           # Total number of epochs
---n_samples_per_epoch 150000                                            # Number of training samples per epoch
---optimizer sgd,lr=0.1 \
-,weight_decay=0.0005,momentum=0.9,nesterov=True   # Classifier optimizer (sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True / adagrad,lr=0.1,lr_decay=0.05)
---save_opt True                                                         # Save optimizer
---lr_milestones 45 68                                                   # Epochs to divide learning rate by 10
+--batch_size 128                                # Batch size (training)
+--test_batch_size 16                            # Batch size (validation / testing)")
+--rnd_crops False                               # Extract patches randomly (True) or from a non-overlapping grid (False)
+--n_epochs 90                                   # Total number of epochs
+--n_samples_per_epoch 150000                    # Number of training samples per epoch
+--optimizer sgd,lr=0.1,weight_decay=0.0005,\
+momentum=0.9,nesterov=True                      # Classifier optimizer (sgd,lr=0.1,weight_decay=0.0005,momentum=0.9,nesterov=True / adagrad,lr=0.1,lr_decay=0.05)
+--save_opt True                                 # Save optimizer
+--lr_milestones 45 68                           # Epochs to divide learning rate by 10
 
 # loaders / gpus
---n_workers 10                                                          # Number of workers per data loader
---pin_memory True                                                       # Pin memory of data loaders
---gpu_devices 0                                                         # Which gpu devices to use
+--n_workers 10                                  # Number of workers per data loader
+--pin_memory True                               # Pin memory of data loaders
+--gpu_devices 0                                 # Which gpu devices to use
 
 # reload
---reload ""                                                             # Path to a pre-trained classifier (and optimizer if saved)
---est_reload ""                                                         # Path to a a pre-trained PRNU estimator (trained with estimator.py)
---resume False                                                          # Resume training
+--reload ""                                     # Path to a pre-trained classifier (and optimizer if saved)
+--est_reload ""                                 # Path to a a pre-trained PRNU estimator (trained with estimator.py)
+--resume False                                  # Resume training
 
 # debug
---debug False                                                           # Debug mode (only use a subset of the available data)
+--debug False                                   # Debug mode (only use a subset of the available data)
 ```
 
 #### Train Cama

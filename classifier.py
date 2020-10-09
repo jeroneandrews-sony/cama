@@ -32,8 +32,9 @@ parser.add_argument("--expanded_cms", type=bool_flag, default=False,
 
 # network architecture
 parser.add_argument("--clf_input", type=str, default="rgb",
-                    help="Classifier input (prnu_lp / rgb / con_conv / "
-                    "prnu_lp_low / prnu_lp_low+prnu_lp)")
+                    help="Classifier input (con_conv / finite_difference / "
+                    "fixed_hpf / rgb+con_conv / rgb+finite_difference / "
+                    "rgb+fixed_hpf / rgb / prnu_lp / prnu_lp_low)")
 parser.add_argument("--clf_architecture", type=str, default="resnet18",
                     help="Classifier architecture (vgg11 / vgg13 / vgg16 / "
                     "vgg19 / resnet18 / resnet34 / resnet50 / densenet40 / "
