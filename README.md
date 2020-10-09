@@ -101,7 +101,9 @@ Each of the above folders (e.g. `data/dataset/dresden_preprocessed/image`) conta
 The number of unique samples in `adversary`, `examiner`, `test` and `test_outdist` should be 2508, 2463, 600 and 600, respectively. 
 
 ### Training
-#### Train adversarial / non-interactive black-box PRNU estimators 
+#### Train a PRNU estimator
+To train Cama you must first train a PRNU estimator, since it is required for the adversarial training process. (Specifically, it is required by the adversarial evaluator). To train an estimator run `estimator.py`. See below for a full list of possible parameters:
+
 ```bash
 python estimator.py
 
@@ -141,7 +143,9 @@ python estimator.py
 ```
 
 
-#### Train adversarial evaluators / non-interactive black-box classifiers 
+#### Train an evaluator
+Cama requires a dual-stream evaluator. Each stream is trained seperately. To train Cama's high-frequency evaluator stream run `classifier.py --clf_input prnu_lp --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`.  To train Cama's low-frequency evaluator stream run `classifier.py --clf_input prnu_lp_low --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
+
 ```bash
 python classifier.py
 
@@ -152,7 +156,7 @@ python classifier.py
 --expanded_cms False                            # Training with an expanded set of camera models (only valid if user is examiner)
 
 # network architecture
---clf_input rgb                                 # Classifier input (con_conv / finite_difference / fixed_hpf / rgb+con_conv / rgb+finite_difference / rgb+fixed_hpf / rgb / prnu_lp / prnu_lp_low)
+--clf_input prnu_lp                             # Classifier input (con_conv / finite_difference / fixed_hpf / rgb+con_conv / rgb+finite_difference / rgb+fixed_hpf / rgb / prnu_lp / prnu_lp_low)
 --clf_architecture resnet18                     # Classifier architecture (vgg11 / vgg13 / vgg16 / vgg19 / resnet18 / resnet34 / resnet50 / densenet40 / densenet100)
 --drop_rate 0.5                                 # Dropout in the classifier
 --efficient False                               # Memory efficient (but slower) training for DenseNet models
@@ -183,6 +187,9 @@ momentum=0.9,nesterov=True                      # Classifier optimizer (sgd,lr=0
 ```
 
 #### Train Cama
+
+(Assuming you have trained a PRNU estimator, a high-frequency evaluator and alow-frequency evaluator). To train Cama run `train.py --clf_low_reload [PATH_TO_LOW_FREQ_EVALUATOR.pth] --clf_high_reload PATH_TO_HIGH_FREQ_EVALUATOR --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
+
 ```bash
 python train.py
 

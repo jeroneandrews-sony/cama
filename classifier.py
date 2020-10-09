@@ -31,7 +31,7 @@ parser.add_argument("--expanded_cms", type=bool_flag, default=False,
                     "(only valid if user is examiner)")
 
 # network architecture
-parser.add_argument("--clf_input", type=str, default="rgb",
+parser.add_argument("--clf_input", type=str, default="prnu_lp",
                     help="Classifier input (con_conv / finite_difference / "
                     "fixed_hpf / rgb+con_conv / rgb+finite_difference / "
                     "rgb+fixed_hpf / rgb / prnu_lp / prnu_lp_low)")
