@@ -160,7 +160,7 @@ python estimator.py
 
 
 ### Train an evaluator
-Cama requires a dual-stream evaluator. Each stream is trained seperately. To train Cama's high-frequency evaluator stream run `python classifier.py --clf_input prnu_lp --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`.  To train Cama's low-frequency evaluator stream run `python classifier.py --clf_input prnu_lp_low --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
+Cama requires a dual-stream evaluator. Each stream is trained separately. To train Cama's high-frequency evaluator stream run `python classifier.py --clf_input prnu_lp --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`.  To train Cama's low-frequency evaluator stream run `python classifier.py --clf_input prnu_lp_low --est_reload [PATH_TO_PRNU_ESTIMATOR.pth]`. See below for a full list of possible parameters:
 
 ```bash
 python classifier.py
