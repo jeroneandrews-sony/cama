@@ -1,9 +1,10 @@
 import os
 import pickle
 from glob import glob
+from shutil import rmtree
 
 import pandas as pd
-from config import dataset_info_savedir
+from config import data_dir, dataset_info_savedir
 
 if __name__ == "__main__":
     # create in-distribution dataframe
@@ -80,3 +81,6 @@ if __name__ == "__main__":
     print("out-of-distribution column sum")
     print(df_out.sum()[1:])
     df_out.to_csv(df_out_savepath, index=False)
+
+    # remove unpreprocessed dresden data
+    rmtree(data_dir)

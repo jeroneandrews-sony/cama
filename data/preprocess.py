@@ -4,7 +4,6 @@ import subprocess
 from glob import glob
 from multiprocessing import Pool, cpu_count
 from os.path import exists, join
-from shutil import rmtree
 
 import config
 import numpy as np
@@ -353,6 +352,3 @@ if __name__ == "__main__":
     # use multiprocessing Pool to speed things up
     with Pool(cpu_count() - 1) as p:
         list(tqdm(p.imap(write_data, data_info), total=len(data_info)))
-
-    # remove unpreprocessed dresden data
-    rmtree(config.data_dir)
