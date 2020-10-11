@@ -173,7 +173,7 @@ class dataset_loader(object):
         self.params = params
         self.train_mode = train_mode
 
-    def dataset(self, data_root, increment):
+    def dataset(self, params, data_root, increment):
         """
         Load a dataset.
         """
@@ -223,7 +223,8 @@ class dataset_loader(object):
         if params.expanded_cms:
             assert "examiner" in params.train_root, "training with an "
             "expanded set of camera models (only valid if user is examiner)"
-            exp_root = params.train_root.replace("examiner", "examiner_outdist")
+            exp_root = params.train_root.replace("examiner",
+                                                 "examiner_outdist")
             dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
                 params,
                 exp_root,

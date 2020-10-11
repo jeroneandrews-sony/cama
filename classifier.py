@@ -159,7 +159,7 @@ else:
     "does not exist and is required"
 
 # load train / validation / test dataset
-train_dataset, n_classes, _ = dataset_loader(params, True).train
+train_dataset, n_classes, _ = dataset_loader(params, True).train()
 validation_dataset, n_classes_valid, _ = dataset_loader(params, False).test(
     params.val_root)
 test_dataset, n_classes_test, _ = dataset_loader(params, False).test(

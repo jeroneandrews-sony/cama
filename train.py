@@ -225,7 +225,7 @@ assert params.clf_high_loss_schedule[1] >= 0, "second argument of the "
 "(0 to disable)"
 
 # load train / validation dataset
-train_dataset, n_classes, _ = dataset_loader(params, True).train
+train_dataset, n_classes, _ = dataset_loader(params, True).train()
 validation_dataset, n_classes_valid, _ = dataset_loader(params, False).test(
     params.val_root)
 params.n_classes = n_classes
