@@ -246,7 +246,7 @@ def initialize_exp(params, model_type):
     Initialize the experiment.
     """
     # set the name of the experiment
-    if ("classifiers" == model_type) or ("estimators" == model_type):
+    if ("classifiers" in model_type) or ("estimators" in model_type):
         top_lvl = os.path.join(model_type,
                                "adversary" if "adversary" in params.train_root
                                else "examiner")
@@ -254,9 +254,9 @@ def initialize_exp(params, model_type):
                                    params.clf_architecture if model_type !=
                                    "estimators" else "",
                                    params.clf_input
-                                   if model_type != "estimators" else "",
+                                   if "estimators" not in model_type else "",
                                    params.estimator_output
-                                   if "estimators" == model_type else "",
+                                   if "estimators" in model_type else "",
                                    "train")
     elif "gans" == model_type:
         top_lvl = os.path.join(model_type, "adversary")
