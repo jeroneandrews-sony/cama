@@ -250,14 +250,15 @@ def initialize_exp(params, model_type):
         top_lvl = os.path.join(model_type,
                                "adversary" if "adversary" in params.train_root
                                else "examiner")
-        params.name = os.path.join(top_lvl,
-                                   params.clf_architecture if model_type !=
-                                   "estimators" else "",
-                                   params.clf_input
-                                   if "estimators" not in model_type else "",
-                                   params.estimator_output
-                                   if "estimators" in model_type else "",
-                                   "train")
+        if ("classifiers" in model_type):
+            params.name = os.path.join(top_lvl,
+                                       params.clf_architecture,
+                                       params.clf_input,
+                                       "train")
+        elif ("estimators" in model_type):
+            params.name = os.path.join(top_lvl,
+                                       params.estimator_output,
+                                       "train")
     elif "gans" == model_type:
         top_lvl = os.path.join(model_type, "adversary")
         mid_lvl = os.path.join(params.clf_low_input
