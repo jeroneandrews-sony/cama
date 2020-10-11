@@ -123,6 +123,9 @@ def preprocess_images():
         for dataset in dataset_to_split:
             for part in partition:
                 for data_type in data_types:
+                    if (dataset == "examiner") and (data_type == "remosaic"):
+                        # not needed
+                        continue
                     folder_to_make = join(config.preproc_dir, data_type,
                                           dataset, part, cm_names_dict[i])
                     if not exists(folder_to_make):
@@ -233,7 +236,7 @@ def preprocess_images():
                 # device 2
                 img_dataset.append("test_outdist")
             else:
-                img_dataset.append("train_outdist")
+                img_dataset.append("examiner_outdist")
 
     # create folders in advance for adversary and examiner sets with train /
     # validations partitions
@@ -258,8 +261,11 @@ def preprocess_images():
     for i in range(n_cms):
         for part in partition:
             for data_type in data_types:
+                if data_type == "remosaic":
+                    # not needed
+                    continue
                 folder_to_make = join(config.preproc_dir, data_type,
-                                      "train_outdist", part, cm_names_dict[i])
+                                      "examiner_outdist", part, cm_names_dict[i])
                 if not exists(folder_to_make):
                     subprocess.Popen("mkdir -p %s" % folder_to_make,
                                      shell=True).wait()
@@ -267,7 +273,7 @@ def preprocess_images():
     save_names_out = []
     img_paths_out = []
 
-    datasets = ["train_outdist", "test_outdist"]
+    datasets = ["examiner_outdist", "test_outdist"]
     for dataset in datasets:
         # centrally crop images to a common resolution and save images as
         # torch .pth files

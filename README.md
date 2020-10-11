@@ -104,9 +104,9 @@ Each of the above folders (e.g. `data/dataset/dresden_preprocessed/image`) conta
 * `test` (in-distribution test data)
 * `test_outdist` (out-of-distribution test data)
 
-(Note that the folder `data/dataset/dresden_preprocessed/remosaic` does not have a subfolder `remosaic`, as this type of data is never used by a non-interactive black-box classifier).
+(Note that the folder `data/dataset/dresden_preprocessed/remosaic` does not have a subfolder `examiner` or `examiner_outdist`, as this type of data is never used by a non-interactive black-box classifier for training).
 
-The number of unique samples in `adversary`, `examiner`, `test` and `test_outdist` should be 2508, 2463, 600 and 600, respectively. 
+The number of unique samples in `adversary`, `examiner`, `examiner_outdist`,  `test` and `test_outdist` should be 2508, 2574, 2463, 600 and 600, respectively. 
 
 ## Training
 To reproduce the results in the paper, run the following scripts:

@@ -14,13 +14,11 @@ if not os.path.exists(DATA_PATH):
 # read csv file with links to images
 INFO_PATH = os.path.join(base_dir, "dresden_info.csv")
 if not os.path.isfile(INFO_PATH):
-    print("getting dresden dataset info from dropbox")
     info = pd.read_csv(os.path.join(base_dir, "dresden_img_urls.csv"),
                        index_col=0)
     # whether the image has been downloaded or not
     info["downloaded"] = False
 else:
-    print("getting dresden dataset info from the locally stored file")
     info = pd.read_csv(INFO_PATH, index_col=0)
 
 # unique camera models

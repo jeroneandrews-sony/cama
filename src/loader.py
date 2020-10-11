@@ -223,7 +223,7 @@ class dataset_loader(object):
         if params.expanded_cms:
             assert "examiner" in params.train_root, "training with an "
             "expanded set of camera models (only valid if user is examiner)"
-            exp_root = params.train_root.replace("examiner", "train_outdist")
+            exp_root = params.train_root.replace("examiner", "examiner_outdist")
             dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
                 params,
                 exp_root,
@@ -263,7 +263,7 @@ class dataset_loader(object):
             if "validation" in test_root:
                 assert "examiner" in test_root, "validating with an expanded "
                 "set of camera models (only valid if user is examiner)"
-                exp_root = test_root.replace("examiner", "train_outdist")
+                exp_root = test_root.replace("examiner", "examiner_outdist")
                 dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
                     params,
                     exp_root,

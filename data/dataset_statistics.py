@@ -37,7 +37,7 @@ if __name__ == "__main__":
     outofdist_name_dict = pickle.load(open(os.path.join(dataset_info_savedir,
                                                         "outofdist_cm_name"
                                                         "_dict.txt"), "rb"))
-    dset = "train_outdist"
+    dset = "examiner_outdist"
     ims_per_model = []
     for i in range(len(outofdist_name_dict)):
         files_ = glob(os.path.join(dataset_info_savedir, "rgb/%s/**/%s/*.pth"
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         ims_per_model.append(len(files_))
 
     df_out = pd.DataFrame({"model": list(outofdist_name_dict.values()),
-                           "train_outdist": ims_per_model})
+                           "examiner_outdist": ims_per_model})
 
     # create out-of-distribution dataframe
     outofdist_name_dict = pickle.load(open(os.path.join(dataset_info_savedir,
@@ -83,4 +83,5 @@ if __name__ == "__main__":
     df_out.to_csv(df_out_savepath, index=False)
 
     # remove unpreprocessed dresden data
-    rmtree(data_dir)
+    if os.path.isdir(data_dir):
+        rmtree(data_dir)
