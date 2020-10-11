@@ -98,7 +98,7 @@ class transforms(object):
         sample = torch.rot90(sample, n_rots, [1, 2])
         return sample
 
-    def random_crop(self, sample):
+    def random_crop(self, sample, ptc_sz):
         """
         Crop a patch randomly from an image.
         """
@@ -108,7 +108,7 @@ class transforms(object):
         sample = sample[:, x_crop:x_crop + ptc_sz, y_crop:y_crop + ptc_sz]
         return sample
 
-    def grid_crop(self, sample):
+    def grid_crop(self, sample, ptc_sz):
         """
         Crop a patch from a non-overlapping image grid.
         """
