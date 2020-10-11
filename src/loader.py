@@ -217,7 +217,8 @@ class dataset_loader(object):
         Construct training data loader using an imbalanced dataset sampler.
         """
         params = self.params
-        dataset, n_classes, n_samples = self.dataset(params, params.train_root)
+        dataset, n_classes, n_samples = self.dataset(params,
+                                                     params.train_root, False)
 
         # incorporate additional data captured by supplemental camera models
         if params.expanded_cms:
@@ -257,7 +258,7 @@ class dataset_loader(object):
         Construct  validation / testing data loader.
         """
         params = self.params
-        dataset, n_classes, n_samples = self.dataset(params, test_root)
+        dataset, n_classes, n_samples = self.dataset(params, test_root, False)
 
         # incorporate additional data captured by supplemental camera models
         if params.expanded_cms:
