@@ -65,7 +65,7 @@ def reload_params(model_path):
     Given a model path load the model parameters.
     """
     dirname, _ = os.path.split(model_path)
-    with open(os.path.join(dirname, "params.pk"), "rb") as f:
+    with open(os.path.join(dirname, "params.pkl"), "rb") as f:
         pkld_params = pickle.load(f)
     return pkld_params
 

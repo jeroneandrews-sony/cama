@@ -2,7 +2,7 @@
 
 # evaluators for Cama
 python classifier.py --user adversary --clf_architecture resnet18 --clf_input prnu_lp \
---est_reload /models/estimators/adversary/prnu_lp/train/**/best_rmse.pth
+--est_reload /home/jandrews/Documents/cama/models/estimators/adversary/prnu_lp/train/**/best_rmse.pth
 
 python classifier.py --user adversary --clf_architecture resnet18 --clf_input prnu_lp_low \
 --est_reload /models/estimators/adversary/prnu_lp/train/**/best_rmse.pth
