@@ -49,9 +49,9 @@ parser.add_argument("--test_batch_size", type=int, default=32,
 parser.add_argument("--rnd_crops", type=bool_flag, default=False,
                     help="Extract patches randomly (True) or from a "
                     "non-overlapping grid (False)")
-parser.add_argument("--n_epochs", type=int, default=90,
+parser.add_argument("--n_epochs", type=int, default=2,
                     help="Total number of epochs")
-parser.add_argument("--n_samples_per_epoch", type=int, default=150000,
+parser.add_argument("--n_samples_per_epoch", type=int, default=10000,
                     help="Number of training samples per epoch")
 parser.add_argument("--optimizer", type=str, default="adam_standard,"
                     "weight_decay=0.0005",
