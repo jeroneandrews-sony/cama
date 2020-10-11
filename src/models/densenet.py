@@ -124,7 +124,7 @@ class DenseNet(nn.Module):
 
         # concat low- / high-frequency if "+" in clf_input
         self.concat = False
-        if "+" in self.dis_input:
+        if "+" in self.clf_input:
             self.concat = True
 
         if self.concat:
