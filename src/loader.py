@@ -221,19 +221,23 @@ class dataset_loader(object):
                                                      params.train_root, False)
 
         # incorporate additional data captured by supplemental camera models
-        if params.expanded_cms:
-            assert "examiner" in params.train_root, "training with an "
-            "expanded set of camera models (only valid if user is examiner)"
-            exp_root = params.train_root.replace("examiner",
-                                                 "examiner_outdist")
-            dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
-                params,
-                exp_root,
-                n_classes)
+        try:
+            if params.expanded_cms:
+                assert "examiner" in params.train_root, "training with an "
+                "expanded set of camera models (only valid if user is "
+                "examiner)"
+                exp_root = params.train_root.replace("examiner",
+                                                     "examiner_outdist")
+                dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
+                    params,
+                    exp_root,
+                    n_classes)
 
-            dataset = ConcatDataset((dataset, dataset_exp))
-            n_classes += n_classes_exp
-            n_samples += n_samples_exp
+                dataset = ConcatDataset((dataset, dataset_exp))
+                n_classes += n_classes_exp
+                n_samples += n_samples_exp
+        except AttributeError:
+            pass
 
         # if debug mode, use a subset of the data (approx 10%)
         if params.debug:
@@ -261,24 +265,29 @@ class dataset_loader(object):
         dataset, n_classes, n_samples = self.dataset(params, test_root, False)
 
         # incorporate additional data captured by supplemental camera models
-        if params.expanded_cms:
-            if "validation" in test_root:
-                assert "examiner" in test_root, "validating with an expanded "
-                "set of camera models (only valid if user is examiner)"
-                exp_root = test_root.replace("examiner", "examiner_outdist")
-                dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
-                    params,
-                    exp_root,
-                    n_classes)
-            else:
-                exp_root = test_root.replace("test", "test_outdist")
-                dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
-                    params,
-                    exp_root,
-                    n_classes)
-            dataset = ConcatDataset((dataset, dataset_exp))
-            n_classes += n_classes_exp
-            n_samples += n_samples_exp
+        try:
+            if params.expanded_cms:
+                if "validation" in test_root:
+                    assert "examiner" in test_root, "validating with an "
+                    "expanded set of camera models (only valid if user is "
+                    "examiner)"
+                    exp_root = test_root.replace("examiner",
+                                                 "examiner_outdist")
+                    dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
+                        params,
+                        exp_root,
+                        n_classes)
+                else:
+                    exp_root = test_root.replace("test", "test_outdist")
+                    dataset_exp, n_classes_exp, n_samples_exp = self.dataset(
+                        params,
+                        exp_root,
+                        n_classes)
+                dataset = ConcatDataset((dataset, dataset_exp))
+                n_classes += n_classes_exp
+                n_samples += n_samples_exp
+        except AttributeError:
+            pass
 
         # if debug mode is "True" use a subset of the data (approx 10%) using
         # a class based dataset sampler
