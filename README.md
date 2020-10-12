@@ -109,7 +109,7 @@ Each of the above folders (e.g. `data/dataset/dresden_preprocessed/image`) conta
 The number of unique samples in `adversary`, `examiner`, `examiner_outdist`,  `test` and `test_outdist` should be 2508, 2574, 2463, 600 and 600, respectively. 
 
 ## Training
-To reproduce the results in the paper, run the following scripts:
+To reproduce the models in the paper, run the following scripts:
 
 ```bash
 ./scripts/estimator.sh
@@ -263,7 +263,7 @@ python train.py
 
 
 ## Testing
-Given a trained Cama model, to test its anonymization ability (attack success rates and distortion) on in-distribution or out-of-distribution test data run `python test.py`. Note that you must provide a path to either a low- or high-frequency non-interactive black-box target classifiers, which can be trained using `classifier.py`. See below for a full list of possible parameters:
+Given a trained Cama model, to test its anonymization ability (attack success rates and distortion) on in-distribution or out-of-distribution test data run `python test.py`. Note that you must provide a path to either (not both concurrently) a low- or high-frequency non-interactive black-box target classifiers, which can be trained using `classifier.py`. See below for a full list of possible parameters:
 
 ```bash
 python test.py
