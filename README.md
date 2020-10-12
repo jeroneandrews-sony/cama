@@ -114,7 +114,7 @@ To reproduce the results in the paper, run the following scripts:
 ```bash
 ./scripts/estimator.sh
 ./scripts/classifier.sh
-./scripts/anonymize.sh
+./scripts/train.sh
 ```
 
 ### Train a PRNU estimator

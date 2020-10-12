@@ -2,7 +2,7 @@ import argparse
 import os
 import sys
 
-import models
+
 import torch
 from data.config import centre_crop_size, preproc_img_dir
 from src.evaluation import GAN_Evaluator
@@ -23,7 +23,7 @@ parser.add_argument("--ptc_fm", type=int, default=3,
                     help="Number of input feature maps (channels)")
 
 # generator architecture
-parser.add_argument("--gen_input", type=str, default="rgb",
+parser.add_argument("--gen_input", type=str, default="remosaic",
                     help="Generator input (rgb / remosaic)")
 parser.add_argument("--ngf", type=int, default=64,
                     help="Number of feature maps in the generator's first and "
@@ -184,9 +184,6 @@ params.primary_gpu = 0
 # enable cudnn benchmark mode
 torch.backends.cudnn.benchmark = True
 
-# add PerceptualSimilarity modules to path so as to import
-sys.path.insert(0, os.path.join(os.getcwd(), "PerceptualSimilarity"))
-
 # check parameters
 assert params.gen_input in ["rgb", "remosaic"], "invalid generator input (rgb "
 "/ remosaic)"
@@ -335,9 +332,12 @@ if clf_high is not None:
 if est is not None:
     est = est.to(device=params.primary_gpu).eval()
 
+# add PerceptualSimilarity modules to path so as to import
+sys.path.insert(0, os.path.join(os.getcwd(), "PerceptualSimilarity"))
 # construct lpips model for evaluating the distortion of the generated images
 # (using multiple gpu_ids causes an error, most likely an inconsistency with
 # pytorch versions)
+import models  # noqa: E402
 percept_model = models.PerceptualLoss(model="net-lin", net="alex",
                                       use_gpu=True,
                                       gpu_ids=[params.primary_gpu])

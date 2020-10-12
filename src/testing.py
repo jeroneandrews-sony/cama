@@ -45,23 +45,23 @@ class GAN_Tester(object):
 
         # low-frequency input / classifier
         if self.clf_low is not None:
-            self.clf_low_forward = self.classify_low
+            self.clf_forward = self.classify_low
             if "prnu_lp_low" in params.clf_low_input:
                 self.get_clf_low_input = self._prnu_low
             else:
                 self.get_clf_low_input = self._rgb
         else:
-            self.clf_low_forward = self.null_classify
+            self.clf_forward = self.null_classify
 
         # high-frequency input / classifier
         if self.clf_high is not None:
-            self.clf_high_forward = self.classify_high
+            self.clf_forward = self.classify_high
             if "prnu_lp" in params.clf_high_input:
                 self.get_clf_high_input = self._prnu
             else:
                 self.get_clf_high_input = self._rgb
         else:
-            self.clf_high_forward = self.null_classify
+            self.clf_forward = self.null_classify
 
     def _rgb(self, data):
         """
@@ -109,7 +109,8 @@ class GAN_Tester(object):
         # targeted transformation
         return self.gen(data_rgb, target_labels)
 
-    def classify_low(self, data, target_labels, conf_mat):
+    def classify_low(self, data, labels, target_labels, conf_mat_tgted,
+                     conf_mat_untgted):
         """
         Low-frequency classifier.
         """
@@ -123,11 +124,15 @@ class GAN_Tester(object):
         _, preds = torch.max(logits, 1)
 
         # add results to the confusion matrix
-        for t, p in zip(target_labels.view(-1), preds.view(-1)):
-            conf_mat[t.long(), p.long()] += 1
-        return conf_mat
+        for t, l, p in zip(target_labels.view(-1), labels.view(-1),
+                           preds.view(-1)):
+            conf_mat_tgted[t.long(), p.long()] += 1
+            if self.params.comp_untgted:
+                conf_mat_untgted[l.long(), p.long()] += 1
+        return conf_mat_tgted, conf_mat_untgted
 
-    def classify_high(self, data, target_labels, conf_mat):
+    def classify_high(self, data, labels, target_labels, conf_mat_tgted,
+                      conf_mat_untgted):
         """
         High-frequency classifier.
         """
@@ -141,15 +146,19 @@ class GAN_Tester(object):
         _, preds = torch.max(logits, 1)
 
         # add results to the confusion matrix
-        for t, p in zip(target_labels.view(-1), preds.view(-1)):
-            conf_mat[t.long(), p.long()] += 1
-        return conf_mat
+        for t, l, p in zip(target_labels.view(-1), labels.view(-1),
+                           preds.view(-1)):
+            conf_mat_tgted[t.long(), p.long()] += 1
+            if self.params.comp_untgted:
+                conf_mat_untgted[l.long(), p.long()] += 1
+        return conf_mat_tgted, conf_mat_untgted
 
-    def null_classify(self, data, target_labels, conf_mat):
+    def null_classify(self, data, labels, target_labels, conf_mat_tgted,
+                      conf_mat_untgted):
         """
         Null classifier.
         """
-        return conf_mat
+        return conf_mat_tgted, conf_mat_untgted
 
     def min_max_normalize(self, images):
         """
@@ -173,7 +182,7 @@ class GAN_Tester(object):
         # save image
         output_path = os.path.join(self.image_path, "img_%s.png" % sample_num)
         imsave(output_path, grid_img)
-        print("saved visualization ['%s'] ..." % output_path)
+        print("saved visualization '%s' ..." % output_path)
 
     def compute_distortion(self, data_rgb, gen_outputs, target_labels, psnrs,
                            lpips, samples_per_class):
@@ -188,13 +197,15 @@ class GAN_Tester(object):
         data_rgb, gen_outputs = preprocess(data_rgb), preprocess(gen_outputs)
 
         # get indices for each class in the batch
+        target_labels = target_labels.long()
         idxs, counts = target_labels.unique(return_counts=True)
         counts = counts.float().cpu()
         samples_per_class[idxs] += counts
 
-        # compute lpips
-        lpips_ = self.percept_model.forward(
-            pred=gen_outputs, target=data_rgb, normalize=False)
+        # compute lpips / stop gradient computation
+        with torch.no_grad():
+            lpips_ = self.percept_model.forward(
+                pred=gen_outputs, target=data_rgb, normalize=False)
 
         # compute psnr
         data_rgb, gen_outputs = data_rgb.view(bs, -1), gen_outputs.view(bs, -1)
@@ -216,9 +227,9 @@ class GAN_Tester(object):
         Compute the distortion precomputed transformed images.
         """
         params = self.params
-        transformed_data = self.dataset[0][0]
-        target_labels = self.dataset[0][2]
-        dataset = self.dataset[1]
+        transformed_data = self.test_dataset[0][0]
+        target_labels = self.test_dataset[0][2]
+        dataset = self.test_dataset[1]
 
         # possible target labels depend on whether the test images are in- or
         # out-of-distribution
@@ -247,11 +258,11 @@ class GAN_Tester(object):
             dummy_img = torch.ones_like(groundtruth_imgs[0:1]).float()
 
             # create a visualization image folder dump
-            self.image_path = os.path.join(params.dump_path, "images")
+            self.image_path = params.vis_output_path
             if not os.path.exists(self.image_path):
                 subprocess.Popen("mkdir -p %s" %
                                  self.image_path, shell=True).wait()
-            print("saving transformation visualizations to ['%s'] ..."
+            print("saving transformation visualizations to '%s' ..."
                   % self.image_path)
 
             # randomly select samples to visualize
@@ -275,8 +286,7 @@ class GAN_Tester(object):
                     delta))
 
                 # save the images
-                if params.save_transformed_imgs:
-                    self.save_images(ims_to_plot, len(range_), v)
+                self.save_images(ims_to_plot, len(range_), v)
 
         # initialize logs
         log_psnr = []
@@ -324,9 +334,9 @@ class GAN_Tester(object):
         Compute the distortion precomputed transformed images.
         """
         params = self.params
-        transformed_data = self.dataset[0][0]
-        labels = self.dataset[0][1]
-        target_labels = self.dataset[0][2]
+        transformed_data = self.test_dataset[0][0]
+        labels = self.test_dataset[0][1]
+        target_labels = self.test_dataset[0][2]
 
         # initialize the confusion matrices
         conf_mat_tgted = torch.zeros(params.n_classes_test,
@@ -344,8 +354,8 @@ class GAN_Tester(object):
 
             conf_mat_tgted, conf_mat_untgted = self.clf_forward(
                 transformed_data[j:k].to(device=params.primary_gpu),
-                target_labels[j:k].to(device=params.primary_gpu),
                 labels[j:k].to(device=params.primary_gpu),
+                target_labels[j:k].to(device=params.primary_gpu),
                 conf_mat_tgted,
                 conf_mat_untgted)
 
@@ -412,7 +422,7 @@ class GAN_Tester(object):
         with torch.no_grad():
             for r_ in range_:
                 # iterate over the test dataset
-                for n_iter, (data, labels) in enumerate(self.dataset):
+                for n_iter, (data, labels) in enumerate(self.test_dataset):
                     # split data into rgb and corresponding remosaiced
                     # versions.
                     # Note: if the generator's input is "rgb" then data[1] = []
@@ -428,31 +438,33 @@ class GAN_Tester(object):
                     # generate target labels different from the ground truth
                     # labels
                     if params.in_dist:
-                        target_labels = (labels + r_) % params.n_classes
+                        batch_target_labels = (labels + r_) % params.n_classes
                     else:
-                        target_labels = torch.zeros_like(labels) + r_
+                        batch_target_labels = torch.zeros_like(labels) + r_
 
                     # transform the data conditioned on their corresponding
                     # target labels
-                    gen_outputs = self.generate_samples(data_rgb,
-                                                        data_remosaic,
-                                                        labels, target_labels)
+                    gen_outputs = self.transform_samples(data_rgb,
+                                                         data_remosaic,
+                                                         labels,
+                                                         batch_target_labels)
 
                     # store data / labels in pre-initialized arrays
                     groundtruth_labels[idx:idx + n_imgs] = labels.detach()\
                         .cpu()
-                    target_labels[idx:idx + n_imgs] = target_labels.detach()\
-                        .cpu()
+                    target_labels[idx:idx + n_imgs] = batch_target_labels\
+                        .detach().cpu()
                     transformed_imgs[idx:idx + n_imgs] = gen_outputs.detach()\
                         .cpu()
                     idx += n_imgs
 
-        save_fname = "transformed_imgs"
-        save_fname += "_id.pth" if params.in_dist else "_ood.pth"
-        save_name = os.path.join(params.dump_path, save_fname)
-        torch.save([transformed_imgs, groundtruth_labels, target_labels,
-                    params.gen_input], save_name)
-        print("saving transformed images, groundtruth labels and target "
-              "labels to '%s'" % save_name)
+        if params.save_transformed_imgs:
+            save_fname = "transformed_imgs"
+            save_fname += "_id.pth" if params.in_dist else "_ood.pth"
+            save_name = os.path.join(params.dump_path, save_fname)
+            torch.save([transformed_imgs, groundtruth_labels, target_labels,
+                        params.gen_input], save_name)
+            print("saving transformed images, groundtruth labels and target "
+                  "labels to '%s'" % save_name)
         return [transformed_imgs, groundtruth_labels, target_labels,
                 params.gen_input]

@@ -20,17 +20,17 @@ class sample_loader(object):
         self.model_type = model_type
         self.gen_input = gen_input
 
-        if model_type == "classifiers":
+        if "classifiers" in model_type:
             self.loader = self.basic_loader
-        elif model_type == "estimators":
+        elif "estimators" in model_type:
             self.loader = self.estimator_loader
-        elif model_type == "gans":
+        elif "gans" in model_type:
             if self.gen_input == "remosaic":
                 self.loader = self.gan_remosaic_loader
             else:
-                self.loader = self.basic_loader
+                self.loader = self.gan_basic_loader
         else:
-            raise Exception('Unknown model type: "%s"' % model_type)
+            raise Exception("Unknown model type: '%s'" % model_type)
 
     def basic_loader(self, path):
         """
@@ -52,6 +52,12 @@ class sample_loader(object):
         remosaic_path = path.replace("rgb", "remosaic")
         return torch.load(path).float(), torch.load(remosaic_path).float()
 
+    def gan_basic_loader(self, path):
+        """
+        Returns an image and its remosaic.
+        """
+        return torch.load(path).float(), []
+
     def load(self, path):
         return self.loader(path)
 
@@ -72,14 +78,14 @@ class transforms(object):
         else:
             self.crop = self.grid_crop
 
-        if model_type == "estimators":
+        if "estimators" in model_type:
             self.transformer = self.estimator_transforms
-        elif model_type == "gans":
-            if gen_input == "remosaics":
+        elif "gans" in model_type:
+            if gen_input == "remosaic":
                 self.transformer = self.gan_transforms
             else:
                 self.transformer = self.gan_basic_transforms
-        elif model_type == "classifiers":
+        elif "classifiers" in model_type:
             self.transformer = self.basic_transforms
         else:
             raise Exception("Unknown model type: '%s'" % model_type)

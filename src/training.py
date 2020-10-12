@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from torchsummary import summary
 
-from .models.losses import (gan_loss, l1_loss, mse_loss, xent_loss)
+from .models.losses import gan_loss, l1_loss, mse_loss, xent_loss
 from .models.utils import update_con_conv
 from .utils import (generate_targets, get_optimizer, lambda_coeff, preprocess,
                     reload_state_dict, save_state, schedule_lr)
@@ -501,7 +501,7 @@ class GAN_Trainer(object):
                 data_rgb, gen_outputs, labels, target_labels)
 
             # rescale all pixel values from [0,255] to [-1,1]
-            data_rgb, = preprocess(data_rgb)
+            data_rgb = preprocess(data_rgb)
             gen_outputs = preprocess(gen_outputs)
 
             # compute pixel-wise image content loss
@@ -576,7 +576,7 @@ class GAN_Trainer(object):
             del self.stats["total_gen_loss"][:]
             del self.stats["d(x,y)"][:]
             del self.stats["d(x,y')"][:]
-            del self.stats["d(g(x,y'), y')"][:]
+            del self.stats["d(g(x,y'),y')"][:]
 
         # number of iterations completed
         self.params.n_iters_done += 1

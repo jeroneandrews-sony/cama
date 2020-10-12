@@ -2,14 +2,14 @@ import argparse
 import os
 import sys
 
-import models
 import torch
 from data.config import centre_crop_size, preproc_img_dir
 from src.loader import dataset_loader
 from src.models.utils import Classifier, Estimator, Generator
 from src.testing import GAN_Tester
 from src.utils import (bool_flag, get_valid_input_names, glob_get_path,
-                       initialize_test_exp, reload_params, reload_state_dict)
+                       initialize_test_exp, reload_params,
+                       reload_state_dict)
 
 # parse parameters
 parser = argparse.ArgumentParser(description="Conditional GAN testing for "
@@ -34,6 +34,8 @@ parser.add_argument("--save_transformed_imgs", type=bool_flag, default=False,
                     "during other runs of testing?")
 
 # visualization parameters
+parser.add_argument("--vis_output_path", type=str, default="visualizations",
+                    help="Output path for the visualizations")
 parser.add_argument("--visualize", type=int, default=10,
                     help="Number of transformation visualizations to save "
                     "(0 to disable)")
@@ -73,6 +75,12 @@ params.reload = glob_get_path(params.reload)
 assert os.path.isfile(params.reload), "conditional GAN reload file does not "
 "exist"
 
+if params.clf_low_reload and params.clf_high_reload:
+    raise Exception("provide either clf_low_reload or clf_high_reload, not "
+                    "both")
+elif not (params.clf_low_reload or params.clf_high_reload):
+    raise Exception("provide either clf_low_reload or clf_high_reload")
+
 # set user
 params.user = "adversary"
 
@@ -99,14 +107,12 @@ params.primary_gpu = 0
 # enable cudnn benchmark mode
 torch.backends.cudnn.benchmark = True
 
-# add PerceptualSimilarity modules to path so as to import
-sys.path.insert(0, os.path.join(os.getcwd(), "PerceptualSimilarity"))
-
 # get some necessary additional params from the generator file
 gen_params = reload_params(params.reload)
 params.n_classes = gen_params.n_classes
 params.gen_input = gen_params.gen_input
 params.dump_path = gen_params.dump_path
+params.model_type = gen_params.model_type
 
 # load test dataset
 test_dataset, n_classes_test, n_samples_test = dataset_loader(params, False)\
@@ -197,13 +203,15 @@ if clf_high is not None:
 if est is not None:
     est = est.to(device=params.primary_gpu).eval()
 
+# add PerceptualSimilarity modules to path so as to import
+sys.path.insert(0, os.path.join(os.getcwd(), "PerceptualSimilarity"))
 # construct lpips model for evaluating the distortion of the generated images
 # (using multiple gpu_ids causes an error, most likely an inconsistency with
 # pytorch versions)
+import models  # noqa: E402
 percept_model = models.PerceptualLoss(model="net-lin", net="alex",
                                       use_gpu=True,
                                       gpu_ids=[params.primary_gpu])
-
 
 if params.transformed_imgs_reload:
     if "_ood" in params.transformed_imgs_reload:
