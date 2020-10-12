@@ -34,7 +34,7 @@ parser.add_argument("--save_transformed_imgs", type=bool_flag, default=False,
                     "during other runs of testing?")
 
 # visualization parameters
-parser.add_argument("--vis_output_path", type=str, default="visualizations",
+parser.add_argument("--vis_out_path", type=str, default="visualizations",
                     help="Output path for the visualizations")
 parser.add_argument("--visualize", type=int, default=10,
                     help="Number of transformation visualizations to save "

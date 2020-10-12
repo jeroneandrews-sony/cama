@@ -279,6 +279,7 @@ python test.py
 --save_transformed_imgs False   # Save the transformed images to disk for reuse during other runs of testing?
 
 # visualization parameters
+--vis_out_path visualizations   # Output path for the visualizations
 --visualize 10                  # Number of transformation visualizations to save (0 to disable)
 --padding 20                    # Amount of padding (in pixels) between images in a single plot
 

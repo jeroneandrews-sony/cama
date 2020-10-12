@@ -258,7 +258,7 @@ class GAN_Tester(object):
             dummy_img = torch.ones_like(groundtruth_imgs[0:1]).float()
 
             # create a visualization image folder dump
-            self.image_path = params.vis_output_path
+            self.image_path = params.vis_out_path
             if not os.path.exists(self.image_path):
                 subprocess.Popen("mkdir -p %s" %
                                  self.image_path, shell=True).wait()
