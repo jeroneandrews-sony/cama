@@ -39,7 +39,7 @@ Example (below) of Cama transformed images <img src="https://render.githubuserco
 <p align="center"><img src="images/building.png" /></p>
 
 #### Previous approaches to camera model anonymization
-Previous works view anonymisation as requiring the transformation of pixel non-uniformity (PNU) noise, which is defined as slight variations in the sensitivity of individual pixel sensors. Although initially device-specific, these variations propagate nonlinearly through a digital camera's processing steps that result in the viewable image, and thus end up also depending on model-specific aspects.
+Previous works view anonymization as requiring the transformation of pixel non-uniformity (PNU) noise, which is defined as slight variations in the sensitivity of individual pixel sensors. Although initially device-specific, these variations propagate nonlinearly through a digital camera's processing steps that result in the viewable image, and thus end up also depending on model-specific aspects.
 
 Model anonymization approaches based on PNU suppress the image content, using a denoising filter, and instead work with the noise residual, i.e. the observed image minus the estimated noise-free image content.
 This is premised on improving the signal-to-noise ratio between the model-specific artifacts, i.e. the signal of interest, and the observable image. However, this precludes any anonymization process from attending to discriminative low spatial frequency model-specific artifacts, since they no longer exist within the high-frequency noise residual. 
