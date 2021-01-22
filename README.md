@@ -1,5 +1,5 @@
 # Conditional Adversarial Camera Model Anonymization
-PyTorch implementation of Conditional Adversarial Camera Model Anonymization [[arxiv](https://arxiv.org/abs/2002.07798)] (Proceedings of the European Conference on Computer Vision (ECCV) 2020 Advances in Image Manipulation Workshop).
+PyTorch implementation of [Conditional Adversarial Camera Model Anonymization](https://link.springer.com/chapter/10.1007/978-3-030-66823-5_13) (Proceedings of the European Conference on Computer Vision (ECCV) 2020 Advances in Image Manipulation Workshop). ([arXiv version](https://arxiv.org/abs/2002.07798)).
 
 ## Contents
 * [Problem description](#problem-description)
@@ -299,7 +299,7 @@ python test.py
 ## References
 If you find this repository useful, please consider citing the following:
 
-Andrews, J.T.A., Zhang, Y. and Griffin, L.D., 2020. [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798). *Proceedings of the European Conference on Computer Vision (ECCV) Workshops*.
+Andrews, J.T.A., Zhang, Y. and Griffin, L.D., 2020. [Conditional Adversarial Camera Model Anonymization](https://link.springer.com/chapter/10.1007/978-3-030-66823-5_13). *Proceedings of the European Conference on Computer Vision (ECCV) Workshops*. ([arXiv version](https://arxiv.org/abs/2002.07798)).
 
 ```
 @inproceedings{andrews2020conditional,
