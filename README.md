@@ -302,11 +302,13 @@ If you find this repository useful, please consider citing the following:
 Andrews, J.T.A., Zhang, Y. and Griffin, L.D., 2020. [Conditional Adversarial Camera Model Anonymization](https://arxiv.org/abs/2002.07798). *Proceedings of the European Conference on Computer Vision (ECCV) Workshops*.
 
 ```
-@InProceedings{Andrews_2020_ECCV_Workshops},
-author = {Andrews, Jerone T A and Zhang, Yidan and Griffin, Lewis D},
-title = {Conditional Adversarial Camera Model Anonymization},
-booktitle = {Proceedings of the European Conference on Computer Vision (ECCV) Workshops},
-year = {2020}
+@inproceedings{andrews2020conditional,
+  title={Conditional Adversarial Camera Model Anonymization},
+  author={Andrews, Jerone TA and Zhang, Yidan and Griffin, Lewis D},
+  booktitle={European Conference on Computer Vision (ECCV) Workshops},
+  pages={217--235},
+  year={2020},
+  organization={Springer}
 }
 ```
 
